@@ -1,67 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:host {
+    /* Mismas variables globales de tu aplicación */
+    --primary: #E63946;
+    --primary-hover: #D62828;
+    --primary-light: #FFF0F1;
+
+    --surface: #FFFFFF;
+    --background: #F8FAFC;
+
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+
+    --border: #E2E8F0;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* --- NAVBAR PRINCIPAL --- */
 .navbar {
-    background: #d32f2f;
-    color: white;
-    padding: 15px 25px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    /* Hace que la barra se quede pegada arriba al hacer scroll */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+    font-family: 'Inter', sans-serif;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 70px;
+    /* Altura fija para alineación perfecta */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-.subtitle {
-    font-size: 0.5rem;
-    opacity: 0.75;
-    justify-content: center;
-    padding-left: 80px;
-    padding-top: -50px;
-}
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
 }
 
+/* --- LOGO GROUP --- */
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.logo-icon {
+    font-size: 1.4rem;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.badge-beta {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+    /* Pequeño ajuste visual */
+}
+
+/* --- MENÚ DE ENLACES --- */
 .menu {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
 }
 
-.menu a {
-    color: white;
+.menu a:not(.btn-login) {
+    color: var(--text-muted);
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+    padding: 8px 0;
+    position: relative;
 }
 
+.menu a:not(.btn-login):hover {
+    color: var(--text-main);
+}
+
+/* Estado Activo (La línea roja debajo del texto) */
+.menu a.active:not(.btn-login) {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.menu a.active:not(.btn-login)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary);
+    border-radius: 2px 2px 0 0;
+}
+
+/* --- USUARIO Y BOTONES --- */
 .user-email {
-    background: #b71c1c;
-    padding: 5px 10px;
+    background: var(--background);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.btn-login {
+    background: var(--primary);
+    color: white !important;
+    text-decoration: none;
+    padding: 8px 20px !important;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    transition: background 0.2s ease;
+}
+
+.btn-login:hover {
+    background: var(--primary-hover);
 }
 
 .btn-logout {
-    background: white;
-    color: #d32f2f;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: bold;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid transparent;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
 }
-/* BOTON HAMBURGUESA */
+
+.btn-logout:hover {
+    color: #EF4444;
+    /* Rojo error */
+    background: #FEE2E2;
+}
+
+/* --- HAMBURGUESA (MÓVIL) --- */
 .menu-toggle {
     display: none;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     cursor: pointer;
+    color: var(--text-main);
+    user-select: none;
+    padding: 5px;
 }
 
-/* MOBILE */
-@media (max-width: 768px) {
-
-    .navbar {
-        flex-wrap: wrap;
-        padding: 12px 15px;
+/* --- RESPONSIVE (MÓVILES Y TABLETS) --- */
+@media (max-width: 850px) {
+    .nav-container {
+        padding: 0 16px;
     }
 
     .menu-toggle {
@@ -69,29 +180,73 @@
     }
 
     .menu {
+        position: absolute;
+        top: 70px;
+        /* Debajo de la altura del nav */
+        left: 0;
         width: 100%;
+        background: var(--surface);
         flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-        margin-top: 15px;
-        display: none;
+        align-items: stretch;
+        /* Ocupar todo el ancho */
+        gap: 0;
+        padding: 0;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+        /* Animación de despliegue */
+        max-height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
     }
 
     .menu.open {
-        display: flex;
+        max-height: 400px;
+        visibility: visible;
+        opacity: 1;
+        padding: 10px 0 20px 0;
     }
 
-    .menu a {
-        font-size: 1rem;
+    .menu a:not(.btn-login),
+    .user-email,
+    .btn-logout,
+    .btn-login {
+        margin: 0 20px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--background);
+        border-radius: 0;
+        text-align: left;
+        background: transparent;
+    }
+
+    .menu a.active:not(.btn-login)::after {
+        display: none;
+        /* Quitamos la línea inferior en móvil */
+    }
+
+    .menu a.active:not(.btn-login) {
+        color: var(--primary);
+        border-left: 3px solid var(--primary);
+        padding-left: 10px;
     }
 
     .user-email {
-        font-size: 0.75rem;
+        border: none;
+        padding-left: 0;
     }
 
-    .subtitle {
-        padding-left: 0;
-        padding-top: 5px;
-        font-size: 0.7rem;
+    .btn-login,
+    .btn-logout {
+        margin-top: 10px;
+        text-align: center;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+    }
+
+    .btn-login {
+        background: var(--primary) !important;
+        border-color: var(--primary);
     }
 }

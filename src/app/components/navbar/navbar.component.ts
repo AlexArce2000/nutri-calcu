@@ -14,7 +14,9 @@ menuOpen = false;
 
   ngOnInit(): void {
   }
-
+  closeMenu() {
+    this.menuOpen = false;
+  }
   async logout() {
     try {
       await this.authService.logout();

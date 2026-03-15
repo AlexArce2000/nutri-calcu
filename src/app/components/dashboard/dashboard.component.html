@@ -1,24 +1,38 @@
 <div class="container">
-  <div class="header-red">
-    <h2>Mis Perfiles Guardados</h2>
-    <p>Gestiona los planes nutricionales guardados en la nube</p>
+  <div class="header-dashboard">
+    <div class="header-text">
+        <h2>Mis Perfiles Guardados</h2>
+        <p>Gestiona los planes nutricionales almacenados en la nube</p>
+    </div>
   </div>
 
   <div class="perfiles-grid" *ngIf="perfiles$ | async as perfiles">
+    
     <div class="empty-msg" *ngIf="perfiles.length === 0">
-      No tienes perfiles guardados aún.
+      <div class="empty-icon">📂</div>
+      <p>No tienes perfiles guardados aún.</p>
     </div>
 
     <div class="perfil-card" *ngFor="let p of perfiles">
-      <div class="perfil-info">
-        <h3>{{ p.nombrePerfil }}</h3>
-        <p>Fecha: {{ p.fecha | date:'short' }}</p>
-        <small>{{ p.alimentos.length }} alimentos guardados</small>
+      <div class="perfil-content">
+        <div class="perfil-header">
+            <h3>{{ p.nombrePerfil }}</h3>
+            <span class="badge">{{ p.alimentos.length }} ítems</span>
+        </div>
+        <p class="date-text">
+            🗓️ {{ p.fecha | date:'mediumDate' }} a las {{ p.fecha | date:'shortTime' }}
+        </p>
       </div>
+
       <div class="perfil-actions">
-        <button class="btn-load" (click)="cargarPerfil(p)">📂 Cargar</button>
-        <button class="btn-del" (click)="eliminarPerfil(p.id)">🗑️</button>
+        <button class="btn-load" (click)="cargarPerfil(p)">
+            Cargar Perfil
+        </button>
+        <button class="btn-del" (click)="eliminarPerfil(p.id)" title="Eliminar perfil">
+            🗑️
+        </button>
       </div>
     </div>
+
   </div>
 </div>

@@ -1,154 +1,226 @@
-/* Variables locales con el tema rojo */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :host {
-    --primary-red: #d32f2f;
-    --dark-red: #b71c1c;
-    --light-red: #fff5f5;
-    --border-red: #ffcdd2;
+    /* Paleta unificada con la pantalla principal */
+    --primary: #E63946;
+    --primary-hover: #D62828;
+    --primary-light: #FFF0F1;
+    
+    --surface: #FFFFFF;
+    --background: #F8FAFC;
+    
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    
+    --border: #E2E8F0;
+    
+    --danger: #EF4444;
+    --danger-light: #FEE2E2;
+
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
 .container {
-    max-width: 800px;
-    margin: 30px auto;
-    background: #fff;
-    border-radius: 12px;
+    max-width: 900px;
+    margin: 40px auto;
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(226, 232, 240, 0.8);
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    border: 1px solid var(--border-red);
 }
 
-/* Encabezado del Dashboard */
-.header-red {
-    background-color: var(--primary-red);
-    color: white;
-    padding: 25px;
-    text-align: center;
-}
-
-.header-red h2 {
-    margin: 0;
-    font-size: 1.8rem;
-    letter-spacing: 1px;
-}
-
-.header-red p {
-    margin: 5px 0 0;
-    opacity: 0.9;
-    font-size: 0.9rem;
-}
-
-/* Cuadrícula de perfiles */
-.perfiles-grid {
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 1fr; /* Una columna por defecto */
-    gap: 15px;
-}
-
-/* Tarjeta de perfil individual */
-.perfil-card {
+/* --- HEADER --- */
+/* Cambiamos el fondo rojo por blanco, texto oscuro y alineación izquierda (muy Apple/Stripe) */
+.header-dashboard {
+    padding: 32px 40px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    background: white;
-    border: 1px solid var(--border-red);
-    border-radius: 10px;
-    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.header-dashboard h2 {
+    margin: 0 0 6px 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.header-dashboard p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* --- GRID DE PERFILES --- */
+/* Fondo ligeramente gris para que las tarjetas blancas resalten */
+.perfiles-grid {
+    padding: 40px;
+    background: var(--background);
+    display: grid;
+    /* Esto hace que sea responsive automáticamente sin media queries */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+/* --- TARJETAS --- */
+.perfil-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
 }
 
 .perfil-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(211, 47, 47, 0.1);
-    border-color: var(--primary-red);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -8px rgba(0,0,0,0.1);
+    border-color: rgba(230, 57, 70, 0.4); /* Brillo sutil del color primario */
 }
 
-/* Información del texto */
-.perfil-info h3 {
+.perfil-content {
+    padding: 24px 24px 20px;
+}
+
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.perfil-header h3 {
     margin: 0;
-    color: var(--dark-red);
-    font-size: 1.1rem;
+    color: var(--text-main);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
 }
 
-.perfil-info p {
-    margin: 3px 0;
+.date-text {
+    margin: 0;
     font-size: 0.85rem;
-    color: #666;
+    color: var(--text-muted);
+    font-weight: 500;
 }
 
-.perfil-info small {
-    display: inline-block;
-    background: var(--light-red);
-    color: var(--primary-red);
-    padding: 2px 8px;
-    border-radius: 12px;
+/* --- BADGE (Pastilla de contador) --- */
+.badge {
+    background: var(--primary-light);
+    color: var(--primary-hover);
+    padding: 4px 10px;
+    border-radius: 20px;
     font-size: 0.75rem;
-    font-weight: bold;
+    font-weight: 700;
+    white-space: nowrap;
+    margin-left: 10px;
 }
 
-/* Botones de acción */
+/* --- BOTONES DE ACCIÓN --- */
 .perfil-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    padding: 16px 24px;
+    background: #FAFCFF; /* Un azul MUY sutil para la zona de botones */
+    border-top: 1px solid var(--border);
+}
+
+button {
+    font-family: inherit;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-load {
-    background: #2e7d32; /* Verde profesional para cargar */
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.85rem;
-    transition: background 0.2s;
+    flex-grow: 1; /* Ocupa el espacio disponible */
+    background: var(--surface);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    padding: 10px 16px;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-load:hover {
-    background: #1b5e20;
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
 }
 
 .btn-del {
-    background: #f5f5f5;
-    color: #d32f2f;
-    border: 1px solid #ffcdd2;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.2s;
+    background: var(--surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
 }
 
 .btn-del:hover {
-    background: #ffebee;
-    border-color: #d32f2f;
+    background: var(--danger-light);
+    color: var(--danger);
+    border-color: var(--danger-light);
 }
 
-/* Mensaje de lista vacía */
+/* --- EMPTY STATE --- */
 .empty-msg {
+    grid-column: 1 / -1; /* Ocupa todo el ancho */
     text-align: center;
-    padding: 50px 20px;
-    color: #999;
-    font-style: italic;
+    padding: 60px 20px;
+    background: var(--surface);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+    color: var(--text-muted);
 }
 
-/* Responsive: 2 columnas en pantallas grandes */
-@media (min-width: 650px) {
+.empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.empty-msg p {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+    .container {
+        margin: 20px 10px;
+        border-radius: var(--radius-md);
+    }
+    
+    .header-dashboard {
+        padding: 24px;
+    }
+    
     .perfiles-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    .perfil-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    .perfil-actions {
-        width: 100%;
-        justify-content: space-between;
-    }
-    .btn-load {
-        flex-grow: 1;
+        padding: 20px;
+        gap: 16px;
     }
 }

@@ -1,26 +1,39 @@
 <nav class="navbar">
-    <div class="logo" routerLink="/">
-        🍎 NutriCalculadora
-        <p class="subtitle">Versión Beta</p>
-    </div>
+    <div class="nav-container">
+        <!-- Logo -->
+        <div class="logo-group" routerLink="/" (click)="closeMenu()">
+            <span class="logo-icon">🍎</span>
+            <span class="logo-text">NutriCalculadora</span>
+            <span class="badge-beta">Beta</span>
+        </div>
 
-    <div class="menu-toggle" (click)="toggleMenu()">
-        ☰
-    </div>
+        <!-- Botón Hamburguesa -->
+        <div class="menu-toggle" (click)="toggleMenu()" [class.active]="menuOpen">
+            {{ menuOpen ? '✕' : '☰' }}
+        </div>
 
-    <div class="menu" [class.open]="menuOpen">
-        <a routerLink="/" routerLinkActive="active">Calculadora</a>
+        <!-- Menú de navegación -->
+        <div class="menu" [class.open]="menuOpen">
+            
+            <!-- Agregamos (click)="closeMenu()" -->
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">
+                Calculadora
+            </a>
 
-        <!-- Si NO hay usuario -->
-        <ng-container *ngIf="!(authService.user$ | async)">
-            <a routerLink="/login" class="btn-login">Iniciar Sesión</a>
-        </ng-container>
+            <!-- Si NO hay usuario -->
+            <ng-container *ngIf="!(authService.user$ | async)">
+                <a routerLink="/login" class="btn-login" (click)="closeMenu()">Iniciar Sesión</a>
+            </ng-container>
 
-        <!-- Si HAY usuario -->
-        <ng-container *ngIf="authService.user$ | async as user">
-            <a routerLink="/dashboard">Mis Perfiles</a>
-            <span class="user-email">{{ user?.email }}</span>
-            <button (click)="logout()" class="btn-logout">Cerrar Sesión</button>
-        </ng-container>
+            <!-- Si HAY usuario -->
+            <ng-container *ngIf="authService.user$ | async as user">
+                <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Mis Perfiles</a>
+                <span class="user-email">{{ user?.email }}</span>
+                
+                <!-- Aquí encadenamos las dos funciones separadas por punto y coma -->
+                <button (click)="logout(); closeMenu()" class="btn-logout">Cerrar Sesión</button>
+            </ng-container>
+            
+        </div>
     </div>
 </nav>
