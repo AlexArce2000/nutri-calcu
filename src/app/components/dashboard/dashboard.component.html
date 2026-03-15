@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="header-red">
+    <h2>Mis Perfiles Guardados</h2>
+    <p>Gestiona los planes nutricionales guardados en la nube</p>
+  </div>
+
+  <div class="perfiles-grid" *ngIf="perfiles$ | async as perfiles">
+    <div class="empty-msg" *ngIf="perfiles.length === 0">
+      No tienes perfiles guardados aún.
+    </div>
+
+    <div class="perfil-card" *ngFor="let p of perfiles">
+      <div class="perfil-info">
+        <h3>{{ p.nombrePerfil }}</h3>
+        <p>Fecha: {{ p.fecha | date:'short' }}</p>
+        <small>{{ p.alimentos.length }} alimentos guardados</small>
+      </div>
+      <div class="perfil-actions">
+        <button class="btn-load" (click)="cargarPerfil(p)">📂 Cargar</button>
+        <button class="btn-del" (click)="eliminarPerfil(p.id)">🗑️</button>
+      </div>
+    </div>
+  </div>
+</div>

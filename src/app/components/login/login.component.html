@@ -1,0 +1,26 @@
+<div class="login-wrapper">
+  <div class="login-box">
+    <img src="assets/img/mascota.png" alt="Logo" class="login-logo">
+    <h2>{{ modoRegistro ? 'Crear Cuenta' : 'Iniciar Sesión' }}</h2>
+    
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" name="email" [(ngModel)]="form.email" placeholder="ejemplo@correo.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" name="password" [(ngModel)]="form.password" placeholder="******" required>
+      </div>
+
+      <button type="submit" class="btn-auth">
+        {{ modoRegistro ? 'Registrarse' : 'Ingresar' }}
+      </button>
+    </form>
+
+    <p class="toggle-auth" (click)="modoRegistro = !modoRegistro">
+      {{ modoRegistro ? '¿Ya tienes cuenta? Inicia Sesión' : '¿No tienes cuenta? Regístrate aquí' }}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,152 @@
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="assets/img/mascota.png" alt="Nutri-Mascota" class="mascot">
+                <div class="header-text">
+                    <h1>Calculadora Nutricional</h1>
+                    <p class="subtitle">Análisis de nutrientes por peso variable</p>
+                    <ng-container *ngIf="authService.user$ | async as user; else invitado">
+                        <h3 class="subtitle">Usuario: {{ userName }}</h3>
+                    </ng-container>
+
+                    <ng-template #invitado>
+                        <h3 class="subtitle">Modo Invitado</h3>
+                    </ng-template>
+                </div>
+            </div>
+        </header>
+
+        <section class="config-panel">
+            <div class="input-group search-group">
+                <label>Buscar Alimento</label>
+                <input type="text" [(ngModel)]="searchTerm" (input)="buscar()" placeholder="Escriba ej: Pollo, Pan..."
+                    autocomplete="off">
+
+                <div class="sugerencias-box" *ngIf="filteredAlimentos.length > 0">
+                    <div class="sugerencia-item" *ngFor="let item of filteredAlimentos" (click)="seleccionar(item)">
+                        <strong>{{item.nombre}}</strong> <small>({{item.medida}})</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group qty-group">
+                <label>Cantidad (g/ml)</label>
+                <input type="number" [(ngModel)]="cantidad" min="1">
+            </div>
+        </section>
+
+        <div class="alimento-info-card" *ngIf="seleccionado">
+            <strong>{{ seleccionado.nombre }}</strong><br>
+            Base: {{ seleccionado.medida }} ({{ seleccionado.pesoBase }}g/ml)
+        </div>
+
+        <main class="results-container" *ngIf="seleccionado">
+            <div class="table-header">
+                <div class="col-main">Nutriente</div>
+                <div class="col-val">Base</div>
+                <div class="col-res">Calculado</div>
+            </div>
+            <div id="resultsBody">
+                <div class="grid-row" *ngFor="let nut of seleccionado.nutrientes">
+                    <div class="label-cell">{{ nut.n }}</div>
+                    <div class="value-cell">{{ nut.v }}</div>
+                    <div class="result-cell">{{ calcularDisplay(nut.v) }}</div>
+                </div>
+            </div>
+            <div class="actions-bar">
+                <button class="btn-save" (click)="guardar()">Guardar en Tabla</button>
+            </div>
+        </main>
+
+        <footer>
+            <div class="empty-state" *ngIf="!seleccionado">Busque y seleccione un alimento</div>
+            <p>Los valores "-" indican que el dato no está disponible en la base.</p>
+        </footer>
+
+        <section class="export-section">
+            <div class="export-header">
+                <h2>Historial de Cálculos</h2>
+                <div class="button-group">
+                    <button class="btn-import" (click)="fileInput.click()">Importar Tabla</button>
+                    <input type="file" #fileInput style="display:none" accept=".csv" (change)="importar($event)">
+                    <button class="btn-excel" (click)="exportar()">Exportar a Excel</button>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="tablaHistorial">
+                    <thead>
+                        <tr>
+                            <th>Alimento</th>
+                            <th>Cant.</th>
+                            <th>HC</th>
+                            <th>Prot.</th>
+                            <th>Grasa</th>
+                            <th>Fibra</th>
+                            <th>Na</th>
+                            <th>K</th>
+                            <th>P</th>
+                            <th>Ca</th>
+                            <th>Fe</th>
+                            <th>Colest</th>
+                            <th>Purinas</th>
+                            <th>Agua</th>
+                            <th>Kcal</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of historial">
+                            <td>{{ item.nombre }}</td>
+                            <td>{{ item.cantidad }}</td>
+                            <td>{{ item.hc | number:'1.1-1' }}</td>
+                            <td>{{ item.prot | number:'1.1-1' }}</td>
+                            <td>{{ item.grasa | number:'1.1-1' }}</td>
+                            <td>{{ item.fibra | number:'1.1-1' }}</td>
+                            <td>{{ item.na | number:'1.1-1' }}</td>
+                            <td>{{ item.k | number:'1.1-1' }}</td>
+                            <td>{{ item.p | number:'1.1-1' }}</td>
+                            <td>{{ item.ca | number:'1.1-1' }}</td>
+                            <td>{{ item.fe | number:'1.1-1' }}</td>
+                            <td>{{ item.colest | number:'1.1-1' }}</td>
+                            <td>{{ item.purinas | number:'1.1-1' }}</td>
+                            <td>{{ item.agua | number:'1.1-1' }}</td>
+                            <td>{{ item.kcal | number:'1.1-1' }}</td>
+                            <td><button class="btn-remove" (click)="eliminar(item.id)">✕</button></td>
+                        </tr>
+                    </tbody>
+                    <tfoot *ngIf="historial.length > 0">
+                        <tr class="row-totales">
+                            <td colspan="2">TOTALES</td>
+                            <td>{{ totals.hc | number:'1.1-1' }}</td>
+                            <td>{{ totals.prot | number:'1.1-1' }}</td>
+                            <td>{{ totals.grasa | number:'1.1-1' }}</td>
+                            <td>{{ totals.fibra | number:'1.1-1' }}</td>
+                            <td>{{ totals.na | number:'1.1-1' }}</td>
+                            <td>{{ totals.k | number:'1.1-1' }}</td>
+                            <td>{{ totals.p | number:'1.1-1' }}</td>
+                            <td>{{ totals.ca | number:'1.1-1' }}</td>
+                            <td>{{ totals.fe | number:'1.1-1' }}</td>
+                            <td>{{ totals.colest | number:'1.1-1' }}</td>
+                            <td>{{ totals.purinas | number:'1.1-1' }}</td>
+                            <td>{{ totals.agua | number:'1.1-1' }}</td>
+                            <td>{{ totals.kcal | number:'1.1-1' }}</td>
+                            <td></td>
+                        </tr>
+                        <tr class="row-kcals">
+                            <td colspan="2">Kcals calculadas (Macros):</td>
+                            <td colspan="14">{{ totalKcalsMacros | number:'1.2-2' }} kcal</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="button-group">
+                <button class="btn-clear" (click)="borrarTodo()" *ngIf="historial.length > 0">Borrar Todo</button>
+                <button *ngIf="authService.user$ | async" (click)="guardarEnNube()" class="btn-cloud">
+                    ☁️ Guardar Perfil en la Nube
+                </button>
+            </div>
+        </section>
+    </div>
+</body>

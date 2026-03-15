@@ -1,0 +1,154 @@
+/* Variables locales con el tema rojo */
+:host {
+    --primary-red: #d32f2f;
+    --dark-red: #b71c1c;
+    --light-red: #fff5f5;
+    --border-red: #ffcdd2;
+}
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-red);
+}
+
+/* Encabezado del Dashboard */
+.header-red {
+    background-color: var(--primary-red);
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+.header-red h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+.header-red p {
+    margin: 5px 0 0;
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+/* Cuadrícula de perfiles */
+.perfiles-grid {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna por defecto */
+    gap: 15px;
+}
+
+/* Tarjeta de perfil individual */
+.perfil-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: white;
+    border: 1px solid var(--border-red);
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.perfil-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(211, 47, 47, 0.1);
+    border-color: var(--primary-red);
+}
+
+/* Información del texto */
+.perfil-info h3 {
+    margin: 0;
+    color: var(--dark-red);
+    font-size: 1.1rem;
+}
+
+.perfil-info p {
+    margin: 3px 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.perfil-info small {
+    display: inline-block;
+    background: var(--light-red);
+    color: var(--primary-red);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* Botones de acción */
+.perfil-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-load {
+    background: #2e7d32; /* Verde profesional para cargar */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+.btn-load:hover {
+    background: #1b5e20;
+}
+
+.btn-del {
+    background: #f5f5f5;
+    color: #d32f2f;
+    border: 1px solid #ffcdd2;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.btn-del:hover {
+    background: #ffebee;
+    border-color: #d32f2f;
+}
+
+/* Mensaje de lista vacía */
+.empty-msg {
+    text-align: center;
+    padding: 50px 20px;
+    color: #999;
+    font-style: italic;
+}
+
+/* Responsive: 2 columnas en pantallas grandes */
+@media (min-width: 650px) {
+    .perfiles-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .perfil-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .perfil-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .btn-load {
+        flex-grow: 1;
+    }
+}

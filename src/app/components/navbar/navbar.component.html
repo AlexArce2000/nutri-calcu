@@ -1,0 +1,26 @@
+<nav class="navbar">
+    <div class="logo" routerLink="/">
+        🍎 NutriCalculadora
+        <p class="subtitle">Versión Beta</p>
+    </div>
+
+    <div class="menu-toggle" (click)="toggleMenu()">
+        ☰
+    </div>
+
+    <div class="menu" [class.open]="menuOpen">
+        <a routerLink="/" routerLinkActive="active">Calculadora</a>
+
+        <!-- Si NO hay usuario -->
+        <ng-container *ngIf="!(authService.user$ | async)">
+            <a routerLink="/login" class="btn-login">Iniciar Sesión</a>
+        </ng-container>
+
+        <!-- Si HAY usuario -->
+        <ng-container *ngIf="authService.user$ | async as user">
+            <a routerLink="/dashboard">Mis Perfiles</a>
+            <span class="user-email">{{ user?.email }}</span>
+            <button (click)="logout()" class="btn-logout">Cerrar Sesión</button>
+        </ng-container>
+    </div>
+</nav>
