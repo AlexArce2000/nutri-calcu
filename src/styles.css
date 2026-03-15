@@ -8,6 +8,10 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
   background: var(--background);
   margin: 0;
+}
+* {
+  box-sizing: border-box; /* Fundamental para que el padding no rompa el ancho */
 }
