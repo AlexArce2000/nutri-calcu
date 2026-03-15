@@ -7,7 +7,7 @@
                     <h1>Calculadora Nutricional</h1>
                     <p class="subtitle">Análisis de nutrientes por peso variable</p>
                     <ng-container *ngIf="authService.user$ | async as user; else invitado">
-                        <h3 class="subtitle">Usuario: {{ userName }}</h3>
+                        <h3 class="subtitle">Usuario:<span class="badge-user">{{ userName }}</span></h3>
                     </ng-container>
 
                     <ng-template #invitado>

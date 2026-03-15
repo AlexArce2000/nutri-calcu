@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
+html {
     height: 100%;
     margin: 0;
     padding: 0;
+}
+@import './styles/theme.css';
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--background);
+  margin: 0;
 }

@@ -44,7 +44,18 @@ body {
     padding: 20px 10px;
     -webkit-font-smoothing: antialiased;
 }
-
+.badge-user {
+    background: #f1f6fd;
+    color: var(--primary);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+    /* Pequeño ajuste visual */
+}
 .container {
     max-width: 1100px;
     margin: 0 auto;

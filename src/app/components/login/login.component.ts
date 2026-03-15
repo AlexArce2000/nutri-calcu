@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   form = { email: '', password: '' };
   modoRegistro = false;
-
+  showPassword = false;
   constructor(private authService: AuthService, private router: Router) {}
 
   async onSubmit() {

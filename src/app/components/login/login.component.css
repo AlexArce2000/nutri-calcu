@@ -4,169 +4,203 @@
     /* Paleta unificada de la aplicación */
     --primary: #E63946;
     --primary-hover: #D62828;
-    
+
     --surface: #FFFFFF;
     --background: #F8FAFC;
-    
+
     --text-main: #1E293B;
     --text-muted: #64748B;
-    
+
     --border: #E2E8F0;
 
     --radius-md: 8px;
     --radius-lg: 16px;
-    
+
     /* Sombra elegante y profunda */
     --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
 }
 
-* { 
-    box-sizing: border-box; 
+* {
+    box-sizing: border-box;
 }
 
 /* --- CONTENEDOR PRINCIPAL --- */
 .login-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Se ajusta para que quede centrado descontando el Navbar y Footer */
-  min-height: calc(100vh - 160px); 
-  padding: 40px 20px;
-  font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Se ajusta para que quede centrado descontando el Navbar y Footer */
+    min-height: calc(100vh - 160px);
+    padding: 40px 20px;
+    font-family: 'Inter', sans-serif;
 }
 
 /* --- CAJA BLANCA (TARJETA) --- */
 .login-box {
-  background: var(--surface);
-  padding: 48px 40px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  width: 100%;
-  max-width: 420px;
-  text-align: center;
-  animation: fadeIn 0.4s ease-out;
+    background: var(--surface);
+    padding: 48px 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    animation: fadeIn 0.4s ease-out;
 }
 
 /* --- LOGO Y TÍTULO --- */
-.login-logo { 
-  width: 80px; 
-  height: auto;
-  margin-bottom: 24px; 
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
+.login-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 24px;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.08));
 }
 
-h2 { 
-  color: var(--text-main); 
-  margin: 0 0 32px 0; 
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+h2 {
+    color: var(--text-main);
+    margin: 0 0 32px 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 /* --- FORMULARIO E INPUTS --- */
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Separación automática entre inputs y el botón */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Separación automática entre inputs y el botón */
 }
 
-.form-group { 
-  text-align: left; 
+.form-group {
+    text-align: left;
 }
 
-label { 
-  display: block; 
-  font-size: 0.85rem; 
-  font-weight: 600; 
-  color: var(--text-main); 
-  margin-bottom: 8px; 
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 8px;
 }
 
 input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  font-size: 0.95rem;
-  font-family: inherit;
-  color: var(--text-main);
-  background: var(--surface);
-  transition: all 0.2s ease;
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--text-main);
+    background: var(--surface);
+    transition: all 0.2s ease;
 }
 
 /* Placeholder sutil */
 input::placeholder {
-  color: #94A3B8;
+    color: #94A3B8;
 }
 
 /* Anillo de enfoque moderno (Focus Ring) */
 input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
 }
 
 /* --- BOTÓN DE SUBMIT --- */
 .btn-auth {
-  width: 100%;
-  padding: 14px;
-  background: var(--primary);
-  color: var(--surface);
-  border: none;
-  border-radius: var(--radius-md);
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-top: 8px;
-  font-family: inherit;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.25);
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: var(--surface);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 8px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.25);
 }
 
 .btn-auth:hover {
-  background: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(230, 57, 70, 0.35);
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(230, 57, 70, 0.35);
 }
 
 .btn-auth:active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 /* --- TEXTO INFERIOR (TOGGLE) --- */
 .toggle-auth {
-  margin-top: 32px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color 0.2s ease;
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 6px;
+    margin-top: 32px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s ease;
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 6px;
 }
 
-.toggle-auth:hover { 
-  color: var(--primary); 
-  background-color: rgba(230, 57, 70, 0.05); /* Fondo sutil al pasar el mouse */
+.toggle-auth:hover {
+    color: var(--primary);
+    background-color: rgba(230, 57, 70, 0.05);
+    /* Fondo sutil al pasar el mouse */
+}
+
+.password-input {
+    position: relative;
+}
+
+.password-input input {
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+.toggle-password:hover {
+    color: var(--primary);
 }
 
 /* --- ANIMACIÓN --- */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* --- RESPONSIVO --- */
 @media (max-width: 480px) {
-  .login-wrapper {
-    padding: 20px 15px;
-  }
-  
-  .login-box {
-    padding: 40px 24px;
-    border: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Sombra más suave en móvil */
-  }
+    .login-wrapper {
+        padding: 20px 15px;
+    }
+
+    .login-box {
+        padding: 40px 24px;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        /* Sombra más suave en móvil */
+    }
 }
