@@ -97,7 +97,7 @@ src/app/
 
 ## Seguridad
 *   **Auth Guard:** Protege la ruta `/dashboard`, redirigiendo a usuarios no autorizados al login.
-*   **Firestore Rules:** Configurado inicialmente en modo prueba (se recomienda pasar a modo producción antes del despliegue final).
+*   **Firestore Rules:** Configurado inicialmente en modo prueba y producción.
 *   **Password Persistence:** Formulario optimizado para que los navegadores modernos sugieran el guardado de contraseñas de forma segura.
 
 
