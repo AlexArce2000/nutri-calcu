@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NutriService } from '../../services/nutri.service';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calculator',
@@ -24,7 +25,7 @@ export class CalculatorComponent implements OnInit {
     private nutriService: NutriService,
     public authService: AuthService,
     private firestore: Firestore
-  ) { 
+  ) {
     this.authService.user$.subscribe(user => {
       if (user?.email) {
         this.userName = user.email.split('@')[0];
@@ -32,7 +33,7 @@ export class CalculatorComponent implements OnInit {
         this.userName = 'Invitado';
       }
     });
-  }    
+  }
 
   ngOnInit(): void {
     this.nutriService.getAlimentos().subscribe(data => {
@@ -41,37 +42,34 @@ export class CalculatorComponent implements OnInit {
     this.actualizarTotales();
   }
   async guardarEnNube() {
-    // 1. Obtener el usuario actual
-    this.authService.user$.subscribe(async (user) => {
+    this.authService.user$.pipe(take(1)).subscribe(async (user) => {
       if (!user) {
         alert("Debes iniciar sesión para guardar perfiles en la nube.");
         return;
       }
 
-      // 2. Pedir un nombre para el perfil (ej. Dieta de Pedro, Plan Lunes)
-      const nombrePerfil = prompt("Dale un nombre a este perfil/paciente:");
-      if (!nombrePerfil) return;
-
+      // Si la tabla está vacía, no pedimos nombre
       if (this.historial.length === 0) {
         alert("La tabla está vacía. Agrega alimentos antes de guardar.");
         return;
       }
 
+      const nombrePerfil = prompt("Dale un nombre a este perfil/paciente:");
+      if (!nombrePerfil) return;
+
       try {
-        // 3. Crear el objeto para Firebase
         const datosParaGuardar = {
           uid: user.uid,
           nombrePerfil: nombrePerfil,
           fecha: new Date().toISOString(),
-          alimentos: this.historial, // Los alimentos que están en la tabla
-          totales: this.totals      // Los totales calculados
+          alimentos: this.historial,
+          totales: this.totals
         };
 
-        // 4. Guardar en la colección 'perfiles'
         const col = collection(this.firestore, 'perfiles');
         await addDoc(col, datosParaGuardar);
-        
-        alert("¡Perfil '" + nombrePerfil + "' guardado con éxito en la nube!");
+
+        alert("¡Perfil '" + nombrePerfil + "' guardado con éxito!");
       } catch (error) {
         console.error(error);
         alert("Error al guardar en la nube.");
