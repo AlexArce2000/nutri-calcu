@@ -50,7 +50,7 @@ npm -v  # Debería ser 6.x.x
 ### 2. Clonar e Instalar
 ```bash
 # Clonar el repositorio
-git clone https://github.com/tu-usuario/nutri-calcu.git
+git clone https://github.com/AlexArce2000/nutri-calcu.git
 cd nutri-calcu
 
 # Instalar dependencias (usar legacy-peer-deps por compatibilidad de versiones)
@@ -58,7 +58,7 @@ npm install --legacy-peer-deps
 ```
 
 ### 3. Configurar Firebase
-Edita el archivo `src/environments/environment.ts` con tus credenciales de [Firebase Console](https://console.firebase.google.com/):
+Edita el archivo `src/environments/environment.ts` con las credenciales de [Firebase Console](https://console.firebase.google.com/):
 
 ```typescript
 export const environment = {
