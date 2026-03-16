@@ -35,6 +35,7 @@
 *   **Entorno:** Node.js 14.20.0
 *   **Estilos:** CSS3 con metodología de diseño responsivo y temática carmesí.
 
+
 ---
 
 ## 🚀 Instalación y Configuración
