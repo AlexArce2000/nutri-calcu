@@ -13,6 +13,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { IncapCalculatorComponent } from './components/incap-calculator/incap-calculator.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     CalculatorComponent,
     LoginComponent,
     DashboardComponent,
-    NavbarComponent
+    NavbarComponent,
+    IncapCalculatorComponent
   ],
   imports: [
     BrowserModule,

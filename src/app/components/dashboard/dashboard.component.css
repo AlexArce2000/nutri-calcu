@@ -80,7 +80,7 @@ body {
 }
 
 /* --- TARJETAS --- */
-.perfil-card {
+/* .perfil-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -90,7 +90,7 @@ body {
     transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
     overflow: hidden;
-}
+} */
 
 .perfil-card:hover {
     transform: translateY(-4px);
@@ -207,7 +207,73 @@ button {
     font-weight: 500;
     font-size: 1rem;
 }
+.container-fluid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
+
+.dashboard-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas */
+  gap: 30px;
+  padding: 15px;
+}
+
+.category-section {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border: 1px solid #eee;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid;
+}
+
+/* Colores para Básica */
+.basic-theme .section-title { color: #d32f2f; border-color: #d32f2f; }
+.btn-load { background: #d32f2f; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+
+/* Colores para INCAP */
+.incap-theme .section-title { color: #0277bd; border-color: #0277bd; }
+.btn-load-incap { background: #0277bd; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+
+.perfil-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: 0.2s;
+}
+
+.perfil-card:hover { background: #fafafa; border-color: #ccc; }
+
+.card-info h4 { margin: 0; font-size: 1rem; }
+.card-info small { color: #888; }
+
+.card-btns { display: flex; gap: 8px; }
+.btn-del { background: none; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; padding: 5px 10px; }
+.btn-del:hover { background: #fff5f5; border-color: #d32f2f; }
+
+.empty-msg { text-align: center; color: #999; padding: 20px; font-style: italic; }
+
+/* Móviles: una columna */
+@media (max-width: 850px) {
+  .dashboard-sections {
+    grid-template-columns: 1fr;
+  }
+}
 /* --- RESPONSIVE --- */
 @media (max-width: 600px) {
     .container {

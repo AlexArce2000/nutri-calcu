@@ -1,38 +1,61 @@
 <div class="container">
-  <div class="header-dashboard">
-    <div class="header-text">
-        <h2>Mis Perfiles Guardados</h2>
-        <p>Gestiona los planes nutricionales almacenados en la nube</p>
-    </div>
-  </div>
-
-  <div class="perfiles-grid" *ngIf="perfiles$ | async as perfiles">
-    
-    <div class="empty-msg" *ngIf="perfiles.length === 0">
-      <div class="empty-icon">📂</div>
-      <p>No tienes perfiles guardados aún.</p>
-    </div>
-
-    <div class="perfil-card" *ngFor="let p of perfiles">
-      <div class="perfil-content">
-        <div class="perfil-header">
-            <h3>{{ p.nombrePerfil }}</h3>
-            <span class="badge">{{ p.alimentos.length }} ítems</span>
+    <div class="header-dashboard">
+        <div class="header-text">
+            <h2>Gestión de Perfiles en la Nube</h2>
+            <p>Selecciona un perfil guardado para continuar editando</p>
         </div>
-        <p class="date-text">
-            🗓️ {{ p.fecha | date:'mediumDate' }} a las {{ p.fecha | date:'shortTime' }}
-        </p>
-      </div>
-
-      <div class="perfil-actions">
-        <button class="btn-load" (click)="cargarPerfil(p)">
-            Cargar Perfil
-        </button>
-        <button class="btn-del" (click)="eliminarPerfil(p.id)" title="Eliminar perfil">
-            🗑️
-        </button>
-      </div>
     </div>
 
-  </div>
+    <div class="dashboard-sections">
+
+        <section class="category-section basic-theme">
+            <div class="section-title">
+                <span class="icon">🍎</span>
+                <h3>Perfiles Tabla Básica</h3>
+            </div>
+
+            <div class="cards-container">
+                <div class="empty-msg" *ngIf="(perfilesBasicos$ | async)?.length === 0">
+                    No hay perfiles básicos guardados.
+                </div>
+
+                <div class="perfil-card" *ngFor="let p of perfilesBasicos$ | async">
+                    <div class="card-info">
+                        <h4>{{ p.nombrePerfil }}</h4>
+                        <small>{{ p.alimentos.length }} alimentos • {{ p.fecha | date:'shortDate' }}</small>
+                    </div>
+                    <div class="card-btns">
+                        <button class="btn-load" (click)="cargarBasico(p)">Cargar</button>
+                        <button class="btn-del" (click)="eliminarBasico(p.id)">🗑️</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--  INCAP (AZUL) -->
+        <section class="category-section incap-theme">
+            <div class="section-title">
+                <span class="icon">🔬</span>
+                <h3>Perfiles Tabla INCAP (TCA)</h3>
+            </div>
+
+            <div class="cards-container">
+                <div class="empty-msg" *ngIf="(perfilesIncap$ | async)?.length === 0">
+                    No hay perfiles INCAP guardados.
+                </div>
+
+                <div class="perfil-card" *ngFor="let p of perfilesIncap$ | async">
+                    <div class="card-info">
+                        <h4>{{ p.perfilNombre }}</h4>
+                        <small>{{ p.items.length }} ítems • {{ p.fecha | date:'shortDate' }}</small>
+                    </div>
+                    <div class="card-btns">
+                        <button class="btn-load-incap" (click)="cargarIncap(p)">Cargar</button>
+                        <button class="btn-del" (click)="eliminarIncap(p.id)">🗑️</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
 </div>

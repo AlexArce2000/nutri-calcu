@@ -3,16 +3,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
-import { 
-  Firestore, 
-  collectionData, 
-  collection, 
-  query, 
-  where, 
-  doc, 
-  deleteDoc 
-} from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, query, where, doc, deleteDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +11,9 @@ import {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  perfiles$: Observable<any[]> = of([]);
+  // Dos observables independientes
+  perfilesBasicos$: Observable<any[]> = of([]);
+  perfilesIncap$: Observable<any[]> = of([]);
 
   constructor(
     public authService: AuthService,
@@ -29,35 +22,40 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.perfiles$ = this.authService.user$.pipe(
-      switchMap(user => {
-        if (user) {
-          // 1. Creamos la referencia a la colección
-          const pCollection = collection(this.firestore, 'perfiles');
-          
-          // 2. Creamos la consulta
-          const pQuery = query(pCollection, where('uid', '==', user.uid));
-          
-          // 3. Obtenemos los datos (añadimos el tipo explícito)
-          return collectionData(pQuery, { idField: 'id' }) as Observable<any[]>;
-        } else {
-          return of([]);
-        }
-      })
-    );
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        // 1Cargar Perfiles Básicos
+        const basicCol = collection(this.firestore, 'perfiles');
+        const basicQuery = query(basicCol, where('uid', '==', user.uid));
+        this.perfilesBasicos$ = collectionData(basicQuery, { idField: 'id' });
+
+        // 2Cargar Perfiles INCAP
+        const incapCol = collection(this.firestore, 'perfiles_incap');
+        const incapQuery = query(incapCol, where('uid', '==', user.uid));
+        this.perfilesIncap$ = collectionData(incapQuery, { idField: 'id' });
+      }
+    });
   }
 
-  async eliminarPerfil(id: string) {
-    if (confirm("¿Eliminar este perfil permanentemente?")) {
-      const docRef = doc(this.firestore, `perfiles/${id}`);
-      await deleteDoc(docRef);
+  async eliminarBasico(id: string) {
+    if (confirm("¿Eliminar este perfil básico?")) {
+      await deleteDoc(doc(this.firestore, `perfiles/${id}`));
     }
   }
 
-  cargarPerfil(perfil: any) {
-    // Guardamos los datos en LocalStorage y volvemos a la calculadora
+  async eliminarIncap(id: string) {
+    if (confirm("¿Eliminar este perfil INCAP?")) {
+      await deleteDoc(doc(this.firestore, `perfiles_incap/${id}`));
+    }
+  }
+
+  cargarBasico(perfil: any) {
     localStorage.setItem('nutriHistorial', JSON.stringify(perfil.alimentos));
     this.router.navigate(['/']);
-    // Al volver, la calculadora leerá el LocalStorage automáticamente
+  }
+
+  cargarIncap(perfil: any) {
+    localStorage.setItem('incapHistorial', JSON.stringify(perfil.items));
+    this.router.navigate(['/incap']);
   }
 }

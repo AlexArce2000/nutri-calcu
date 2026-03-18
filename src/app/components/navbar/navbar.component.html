@@ -14,11 +14,12 @@
 
         <!-- Menú de navegación -->
         <div class="menu" [class.open]="menuOpen">
-            
+
             <!-- Agregamos (click)="closeMenu()" -->
             <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">
                 Calculadora
             </a>
+            <a routerLink="/incap" routerLinkActive="active" (click)="closeMenu()">Tabla INCAP</a>
 
             <!-- Si NO hay usuario -->
             <ng-container *ngIf="!(authService.user$ | async)">
@@ -29,11 +30,11 @@
             <ng-container *ngIf="authService.user$ | async as user">
                 <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Mis Perfiles</a>
                 <span class="user-email">{{ user?.email }}</span>
-                
+
                 <!-- Aquí encadenamos las dos funciones separadas por punto y coma -->
                 <button (click)="logout(); closeMenu()" class="btn-logout">Cerrar Sesión</button>
             </ng-container>
-            
+
         </div>
     </div>
 </nav>
