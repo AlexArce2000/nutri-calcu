@@ -3,6 +3,7 @@ import { NutriService } from '../../services/nutri.service';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 import { take } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-calculator',
@@ -44,35 +45,60 @@ export class CalculatorComponent implements OnInit {
   async guardarEnNube() {
     this.authService.user$.pipe(take(1)).subscribe(async (user) => {
       if (!user) {
-        alert("Debes iniciar sesión para guardar perfiles en la nube.");
+        Swal.fire({
+          icon: 'error',
+          title: 'No has iniciado sesión',
+          text: 'Debes estar logueado para guardar en la nube.',
+          confirmButtonColor: '#d32f2f'
+        });
         return;
       }
 
-      // Si la tabla está vacía, no pedimos nombre
       if (this.historial.length === 0) {
-        alert("La tabla está vacía. Agrega alimentos antes de guardar.");
+        Swal.fire({
+          icon: 'warning',
+          title: 'Tabla vacía',
+          text: 'La tabla está vacía. Agrega alimentos antes de guardar.',
+          confirmButtonColor: '#d32f2f'
+        });
         return;
       }
 
-      const nombrePerfil = prompt("Dale un nombre a este perfil/paciente:");
+      const { value: nombrePerfil } = await Swal.fire({
+        title: 'Guardar Perfil',
+        input: 'text',
+        inputLabel: 'Dale un nombre a este perfil/paciente:',
+        inputPlaceholder: 'Ej: Dieta de Juan - Lunes',
+        showCancelButton: true,
+        confirmButtonColor: '#d32f2f',
+        cancelButtonColor: '#666',
+        confirmButtonText: 'Guardar ahora',
+        cancelButtonText: 'Cancelar'
+      });
+
       if (!nombrePerfil) return;
+      if (nombrePerfil) {
+        try {
+          const col = collection(this.firestore, 'perfiles');
+          await addDoc(col, {
+            uid: (user as any).uid,
+            nombrePerfil: nombrePerfil,
+            fecha: new Date().toISOString(),
+            alimentos: this.historial,
+            totales: this.totals
+          });
 
-      try {
-        const datosParaGuardar = {
-          uid: user.uid,
-          nombrePerfil: nombrePerfil,
-          fecha: new Date().toISOString(),
-          alimentos: this.historial,
-          totales: this.totals
-        };
+          Swal.fire({
+            icon: 'success',
+            title: '¡Guardado!',
+            text: `El perfil "${nombrePerfil}" se guardó correctamente.`,
+            timer: 2000,
+            showConfirmButton: false
+          });
 
-        const col = collection(this.firestore, 'perfiles');
-        await addDoc(col, datosParaGuardar);
-
-        alert("¡Perfil '" + nombrePerfil + "' guardado con éxito!");
-      } catch (error) {
-        console.error(error);
-        alert("Error al guardar en la nube.");
+        } catch (e) {
+          Swal.fire({ icon: 'error', title: 'Error al guardar', confirmButtonColor: '#d32f2f' });
+        }
       }
     });
   }
@@ -145,14 +171,34 @@ export class CalculatorComponent implements OnInit {
   }
 
   borrarTodo() {
-    if (confirm("¿Borrar todo el historial?")) {
-      this.historial = [];
-      this.actualizarTotales();
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Esta acción no se puede deshacer.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#666',
+      confirmButtonText: 'Sí, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.historial = [];
+        this.actualizarTotales();
+      }
+    });
   }
 
-  exportar() {
-    if (this.historial.length === 0) return alert("No hay datos");
+  exportar(): void {
+    if (this.historial.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Sin datos', 
+        text: 'No hay datos para exportar',
+        confirmButtonColor: '#E63946',
+        width: '300px',
+      });
+      return;
+    }
     let csv = "\uFEFFAlimento;Cantidad;HC;Prot;Grasa;Fibra;Na;K;P;Ca;Fe;Colest;Purinas;Agua;Kcal\n";
     this.historial.forEach(i => {
       csv += `${i.nombre};${i.cantidad};${i.hc.toFixed(2).replace('.', ',')};${i.prot.toFixed(2).replace('.', ',')};${i.grasa.toFixed(2).replace('.', ',')};${i.fibra.toFixed(2).replace('.', ',')};${i.na.toFixed(2).replace('.', ',')};${i.k.toFixed(2).replace('.', ',')};${i.p.toFixed(2).replace('.', ',')};${i.ca.toFixed(2).replace('.', ',')};${i.fe.toFixed(2).replace('.', ',')};${i.colest.toFixed(2).replace('.', ',')};${i.purinas.toFixed(2).replace('.', ',')};${i.agua.toFixed(2).replace('.', ',')};${i.kcal.toFixed(2).replace('.', ',')}\n`;
@@ -187,6 +233,13 @@ export class CalculatorComponent implements OnInit {
       }
       this.historial = [...this.historial, ...importados];
       this.actualizarTotales();
+      Swal.fire({
+        icon: 'success',
+        title: 'Importación exitosa',
+        text: `${importados.length} alimentos importados correctamente.`,
+        timer: 2000,
+        showConfirmButton: false
+      });
     };
     reader.readAsText(file, "UTF-8");
   }

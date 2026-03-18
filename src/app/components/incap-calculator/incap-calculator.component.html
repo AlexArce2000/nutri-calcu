@@ -33,20 +33,22 @@
                 <input type="number" [(ngModel)]="cantidad">
             </div>
         </section>
-            <div class="alimento-info-card" *ngIf="seleccionado">
-                <strong>{{ seleccionado.nombre }}</strong><br>
+        <div class="alimento-info-card" *ngIf="seleccionado">
+            <strong>{{ seleccionado.nombre }}</strong><br>
             Base: {{ seleccionado.medida }} ({{ seleccionado.pesoBase }}g/ml)
-            </div>
+        </div>
         <main class="results-container" *ngIf="seleccionado">
 
             <div class="table-header">
-                <div>Nutriente</div>
-                <div>Calculado ({{cantidad}}g)</div>
+                <div class="col-n">NUTRIENTE</div>
+                <div class="col-b">BASE</div>
+                <div class="col-c">CALCULADO</div>
             </div>
             <!-- los 28 nutrientes en scroll vertical -->
             <div class="scroll-v-results">
                 <div class="grid-row" *ngFor="let nut of seleccionado.nutrientes">
                     <div class="label-cell">{{ nut.n }} ({{nut.u}})</div>
+                    <div class="value-cell-base">{{ (nut.v === '-' || nut.v === '') ? '-' : nut.v }}</div>
                     <div class="result-cell">{{ calcularNutriente(nut.v) | number:'1.2-2' }}</div>
                 </div>
             </div>
@@ -92,7 +94,7 @@
                             </td>
                         </tr>
                     </tbody>
-                    <tfoot>
+                    <tfoot *ngIf="historial.length > 0">
                         <tr class="row-totales">
                             <td colspan="2" class="sticky-col">TOTALES</td>
                             <!-- Recorremos los 28 totales calculados -->
@@ -106,7 +108,7 @@
             </div>
 
             <div class="button-group">
-                <button class="btn-clear" (click)="borrarTodo()">Borrar Todo</button>
+                <button class="btn-clear" (click)="borrarTodo()" *ngIf="historial.length > 0">Borrar Todo</button>
                 <button *ngIf="authService.user$ | async" class="btn-cloud" (click)="guardarEnNube()">
                     ☁️ Guardar Perfil en la Nube
                 </button>

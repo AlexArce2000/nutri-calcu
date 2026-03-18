@@ -248,8 +248,10 @@ input:focus {
 .value-cell {
     color: var(--text-muted);
     justify-content: center;
+}.value-cell-base {
+    text-align: center;
+    color: #7f8c8d;
 }
-
 .result-cell {
     justify-content: flex-end;
     font-weight: 700;

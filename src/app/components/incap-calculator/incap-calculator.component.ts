@@ -3,6 +3,7 @@ import { NutriService } from '../../services/nutri.service';
 import { AuthService } from '../../services/auth.service';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { take } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-incap-calculator',
@@ -103,15 +104,36 @@ export class IncapCalculatorComponent implements OnInit {
   }
 
   borrarTodo() {
-    if (confirm("¿Limpiar todo el historial INCAP?")) {
-      this.historial = [];
-      this.actualizarTotales();
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Esta acción no se puede deshacer.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#666',
+      confirmButtonText: 'Sí, borrar todo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.historial = [];
+        this.actualizarTotales();
+        Swal.fire('Borrado', 'Todo el historial ha sido borrado.', 'success');
+      }
+    });
   }
 
   // --- EXPORTAR A EXCEL (CSV COMPLETO) ---
-  exportar() {
-    if (this.historial.length === 0) return alert("No hay datos para exportar");
+  exportar():void {
+    if (this.historial.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Sin datos', 
+        text: 'No hay datos para exportar',
+        confirmButtonColor: '#E63946',
+        width: '300px',
+      });
+      return;
+    }
 
     const nombresNutrientes = this.baseDatos[0].nutrientes.map((n: any) => `${n.n} (${n.u})`);
     let csv = "\uFEFFAlimento;Cantidad;" + nombresNutrientes.join(";") + "\n";
@@ -163,31 +185,67 @@ export class IncapCalculatorComponent implements OnInit {
       }
       this.historial = [...this.historial, ...importados];
       this.actualizarTotales();
-      alert("Importación INCAP exitosa");
+      Swal.fire({
+        icon: 'success',
+        title: 'Importación INCAP exitosa',
+        text: `${importados.length} alimentos importados correctamente.`,
+        timer: 2000,
+        showConfirmButton: false
+      });
     };
     reader.readAsText(file, "UTF-8");
   }
 
+  
   async guardarEnNube() {
     this.authService.user$.pipe(take(1)).subscribe(async (user) => {
-      if (!user) return alert("Inicia sesión primero");
-      
-      const nombre = prompt("Nombre del perfil INCAP:");
-      if (!nombre) return;
-
-      try {
-        const col = collection(this.firestore, 'perfiles_incap');
-        await addDoc(col, {
-          uid: user.uid,
-          perfilNombre: nombre,
-          fecha: new Date().toISOString(),
-          items: this.historial,
-          totales: this.totales
+      if (!user) {
+        Swal.fire({
+          icon: 'error',
+          title: 'No has iniciado sesión',
+          text: 'Debes estar logueado para guardar en la nube.',
+          confirmButtonColor: '#d32f2f'
         });
-        alert("Guardado en la nube correctamente");
-      } catch (err) {
-        alert("Error al guardar");
+        return;
       }
+      
+      const { value: nombre } = await Swal.fire({
+        title: 'Guardar Perfil',
+        input: 'text',
+        inputLabel: 'Nombre del perfil/paciente INCAP:',
+        inputPlaceholder: 'Ej: Dieta de Juan - Lunes',
+        showCancelButton: true,
+        confirmButtonColor: '#d32f2f',
+        cancelButtonColor: '#666',
+        confirmButtonText: 'Guardar ahora',
+        cancelButtonText: 'Cancelar'
+      });
+
+      if (!nombre) return;
+      if (nombre) {
+        try {
+          const col = collection(this.firestore, 'perfiles_incap');
+          await addDoc(col, {
+            uid: (user as any).uid,
+            perfilNombre: nombre,
+            fecha: new Date().toISOString(),
+            items: this.historial,
+            totales: this.totales
+          });
+
+          Swal.fire({
+            icon: 'success',
+            title: '¡Guardado!',
+            text: `El perfil "${nombre}" se guardó correctamente.`,
+            timer: 2000,
+            showConfirmButton: false
+          });
+
+        } catch (e) {
+          Swal.fire({ icon: 'error', title: 'Error al guardar', confirmButtonColor: '#d32f2f' });
+        }
+      }
+
     });
   }
 }

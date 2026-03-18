@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Firestore, collectionData, collection, query, where, doc, deleteDoc } from '@angular/fire/firestore';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,15 +39,39 @@ export class DashboardComponent implements OnInit {
   }
 
   async eliminarBasico(id: string) {
-    if (confirm("¿Eliminar este perfil básico?")) {
-      await deleteDoc(doc(this.firestore, `perfiles/${id}`));
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Esta acción no se puede deshacer.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#666',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteDoc(doc(this.firestore, `perfiles/${id}`));
+        Swal.fire('Eliminado', 'El perfil ha sido borrado.', 'success');
+      }
+    });
   }
 
   async eliminarIncap(id: string) {
-    if (confirm("¿Eliminar este perfil INCAP?")) {
-      await deleteDoc(doc(this.firestore, `perfiles_incap/${id}`));
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Esta acción no se puede deshacer.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#666',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteDoc(doc(this.firestore, `perfiles_incap/${id}`));
+        Swal.fire('Eliminado', 'El perfil ha sido borrado.', 'success');
+      }
+    });
   }
 
   cargarBasico(perfil: any) {
