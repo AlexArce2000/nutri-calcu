@@ -3,22 +3,30 @@ import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.authService.user$.pipe(
-      take(1), 
+      take(1),
       map(user => {
         if (user) {
           return true;
         } else {
-          alert('Debes iniciar sesión para acceder a tus perfiles');
+          Swal.fire({
+            icon: 'error',
+            title: 'Acceso denegado',
+            text: 'Debes iniciar sesión para acceder a esta página.',
+            confirmButtonColor: '#d32f2f',
+            width: '250px'
+
+          });
           return this.router.parseUrl('/login');
         }
       })

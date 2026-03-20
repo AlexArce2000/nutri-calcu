@@ -20,7 +20,19 @@
                 Calculadora
             </a>
             <a routerLink="/incap" routerLinkActive="active" (click)="closeMenu()">Tabla INCAP</a>
+            <!-- DROPDOWN HERRAMIENTAS -->
+            <div class="dropdown" [class.show]="toolsOpen" routerLinkActive="active-parent">
 
+                <button class="dropdown-toggle" (click)="toggleTools()">
+                    Herramientas <span class="arrow">▼</span>
+                </button>
+
+                <div class="dropdown-menu">
+                    <a routerLink="/macros" routerLinkActive="active" (click)="closeMenu()">
+                        Distribución de Macros
+                    </a>
+                </div>
+            </div>
             <!-- Si NO hay usuario -->
             <ng-container *ngIf="!(authService.user$ | async)">
                 <a routerLink="/login" class="btn-login" (click)="closeMenu()">Iniciar Sesión</a>

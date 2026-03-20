@@ -1,0 +1,197 @@
+:host {
+    --primary: #E63946;
+    --dark-red: #D32F2F;
+    --light-bg: #F8FAFC;
+    --border: #E2E8F0;
+}
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--background);
+    color: var(--text-main);
+    padding: 20px 10px;
+    -webkit-font-smoothing: antialiased;
+}
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+header.header-macros {
+    background: var(--primary);
+    color: white;
+    padding: 20px 24px;
+}
+
+/* Panel de configuración */
+.config-panel {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+}
+
+.input-main {
+    padding: 10px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    width: 100%;
+}
+
+/* Botones de objetivo */
+.objectives-grid {
+    display: flex;
+    gap: 8px;
+}
+
+.objectives-grid button {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.objectives-grid button.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--dark-red);
+}
+
+/* Tabla de Distribución */
+.table-header-macros {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    background: #1E293B;
+    color: white;
+    padding: 12px 15px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.grid-row-vct {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    background: #F1F5F9;
+    border-bottom: 2px solid var(--border);
+    font-weight: 700;
+}
+
+.grid-row-macros {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+}
+
+.grid-row-macros div, .grid-row-vct div {
+    padding: 15px;
+}
+
+.label-cell { font-weight: 500; color: #475569; }
+.val-vct { color: var(--primary); font-size: 1.2rem; }
+
+.input-cell input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    background: #FFF5F5;
+    font-weight: 700;
+}
+.results-container {
+    padding: 0 32px 24px;
+}
+.result-cell {
+    text-align: right;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.table-footer-macros {
+    padding: 15px;
+    background: #F8FAFC;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.table-footer-macros.invalid {
+    background: #FEE2E2;
+    color: #EF4444;
+}
+
+/* Tarjetas de Métricas Extra */
+.extra-metrics {
+    display: flex;
+    gap: 15px;
+    padding: 24px;
+    background: #F1F5F9;
+}
+
+.metric-card {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.metric-card small { display: block; color: #64748B; margin-bottom: 5px; text-transform: uppercase; }
+.metric-card strong { font-size: 1.2rem; color: #1E293B; }
+/* 1. Ajustar el padding para que coincida con el panel de arriba (24px) */
+.results-container {
+    padding: 0 24px 24px; /* Cambiado de 32px a 24px para alinear */
+}
+
+/* 2. Nuevo estilo para el contenedor de la tabla */
+.table-container-wrapper {
+    border: 1px solid var(--border);
+    border-radius: 8px; /* Aquí controlas el redondeado de las esquinas */
+    overflow: hidden;   /* Importante para que el fondo oscuro no tape el redondeado */
+    margin-top: 10px;
+}
+
+/* 3. Quitar el borde inferior de la última fila para que no choque con el borde del contenedor */
+.grid-row-macros:last-child {
+    border-bottom: none;
+}
+
+/* Opcional: Ajuste fino de alineación para el panel de configuración */
+.config-panel {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    background: #fff;
+    border-bottom: none; /* Quitamos esta línea para que se vea más limpio */
+}
+
+/* Asegurar que los inputs de porcentaje se vean bien */
+.input-cell input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #E63946; /* Rojo de tu paleta */
+    border-radius: 4px;
+    background: #FFF;
+    font-weight: 700;
+}
+@media (max-width: 600px) {
+    .config-panel { flex-direction: column; }
+    .table-header-macros, .grid-row-macros, .grid-row-vct {
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        font-size: 0.8rem;
+    }
+}

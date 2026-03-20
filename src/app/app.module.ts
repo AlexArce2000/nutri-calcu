@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { IncapCalculatorComponent } from './components/incap-calculator/incap-calculator.component';
+import { MacroDistributionComponent } from './components/macro-distribution/macro-distribution.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { IncapCalculatorComponent } from './components/incap-calculator/incap-ca
     LoginComponent,
     DashboardComponent,
     NavbarComponent,
-    IncapCalculatorComponent
+    IncapCalculatorComponent,
+    MacroDistributionComponent
   ],
   imports: [
     BrowserModule,
