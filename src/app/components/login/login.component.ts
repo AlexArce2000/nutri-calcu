@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,21 +15,38 @@ export class LoginComponent {
 
   async onSubmit() {
     if (!this.form.email || !this.form.password) {
-      alert("Por favor completa todos los campos");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Por favor completa todos los campos.',
+        confirmButtonColor: '#d32f2f'
+      });
+
       return;
     }
 
     try {
       if (this.modoRegistro) {
         await this.authService.registrar(this.form);
-        alert("¡Cuenta creada con éxito!");
+        Swal.fire({
+          icon: 'success',
+          title: 'Registro exitoso',
+          text: 'Tu cuenta ha sido creada. Ahora puedes iniciar sesión.',
+          confirmButtonColor: '#4caf50'
+        });
       } else {
         await this.authService.login(this.form);
       }
       this.router.navigate(['/']); // Redirigir a la calculadora
     } catch (error: any) {
       console.error(error);
-      alert("Error: " + this.obtenerMensajeError(error.code));
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de autenticación',
+        text: this.obtenerMensajeError(error.code),
+        confirmButtonColor: '#d32f2f'
+      });
+
     }
   }
 

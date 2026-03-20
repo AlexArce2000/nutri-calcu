@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-menuOpen = false;
+  menuOpen = false;
+  toolsOpen = false;
 
   constructor(public authService: AuthService, private router: Router) { }
 
@@ -16,6 +17,7 @@ menuOpen = false;
   }
   closeMenu() {
     this.menuOpen = false;
+    this.toolsOpen = false;
   }
   async logout() {
     try {
@@ -27,5 +29,15 @@ menuOpen = false;
   }
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+  toggleTools() {
+    this.toolsOpen = !this.toolsOpen;
+  }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.navbar')) {
+      this.closeMenu();
+    }
   }
 }

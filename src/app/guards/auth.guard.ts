@@ -10,11 +10,11 @@ import Swal from 'sweetalert2';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.authService.user$.pipe(
-      take(1), 
+      take(1),
       map(user => {
         if (user) {
           return true;
@@ -23,7 +23,9 @@ export class AuthGuard implements CanActivate {
             icon: 'error',
             title: 'Acceso denegado',
             text: 'Debes iniciar sesión para acceder a esta página.',
-            confirmButtonColor: '#d32f2f'
+            confirmButtonColor: '#d32f2f',
+            width: '250px'
+
           });
           return this.router.parseUrl('/login');
         }

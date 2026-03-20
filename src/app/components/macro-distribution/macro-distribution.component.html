@@ -1,0 +1,96 @@
+<body>
+    <div class="container">
+        <header class="header-macros">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>Distribución de Macronutrientes</h1>
+                    <p class="subtitle">Cálculo de VCT y reparto calórico</p>
+                </div>
+            </div>
+        </header>
+        <main class="results-container">
+            <section class="config-panel">
+                <div class="input-group weight-group">
+                    <label>Peso Actual (kg)</label>
+                    <input type="number" [(ngModel)]="peso" (input)="calcularTodo()" class="input-main">
+                </div>
+
+                <div class="input-group">
+                    <label>Objetivo Calórico</label>
+                    <div class="objectives-grid">
+                        <button [class.active]="objetivo === 'disminuir'"
+                            (click)="objetivo='disminuir'; calcularTodo()">
+                            Disminuir <br> <small>{{ peso * 25 }} kcal</small>
+                        </button>
+                        <button [class.active]="objetivo === 'mantener'" (click)="objetivo='mantener'; calcularTodo()">
+                            Mantener <br> <small>{{ peso * 30 }} kcal</small>
+                        </button>
+                        <button [class.active]="objetivo === 'aumentar'" (click)="objetivo='aumentar'; calcularTodo()">
+                            Aumentar <br> <small>{{ peso * 35 }} kcal</small>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <div class="table-container-wrapper"> <!-- Nuevo contenedor -->
+                <div class="table-header-macros">
+                    <div>MACRO</div>
+                    <div>KCAL</div>
+                    <div>%</div>
+                    <div>GRAMOS</div>
+                </div>
+
+                <!-- Fila VCT -->
+                <div class="grid-row-vct">
+                    <div class="label-cell">VCT (Gasto Total)</div>
+                    <div class="val-vct">{{ vctSeleccionado | number:'1.0-0' }}</div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+                <!-- HC -->
+                <div class="grid-row-macros">
+                    <div class="label-cell">Hidratos de Carbono</div>
+                    <div class="value-cell">{{ hcKcal | number:'1.1-1' }}</div>
+                    <div class="input-cell"><input type="number" [(ngModel)]="hcPct"></div>
+                    <div class="result-cell">{{ hcGram | number:'1.1-2' }} g</div>
+                </div>
+
+                <!-- Proteína -->
+                <div class="grid-row-macros">
+                    <div class="label-cell">Proteínas</div>
+                    <div class="value-cell">{{ prKcal | number:'1.1-1' }}</div>
+                    <div class="input-cell"><input type="number" [(ngModel)]="prPct"></div>
+                    <div class="result-cell">{{ prGram | number:'1.1-2' }} g</div>
+                </div>
+
+                <!-- Grasas -->
+                <div class="grid-row-macros">
+                    <div class="label-cell">Lípidos (Grasas)</div>
+                    <div class="value-cell">{{ lipKcal | number:'1.1-1' }}</div>
+                    <div class="input-cell"><input type="number" [(ngModel)]="lipPct"></div>
+                    <div class="result-cell">{{ lipGram | number:'1.1-2' }} g</div>
+                </div>
+            </div>
+
+            <!-- Totales / Validación -->
+            <div class="table-footer-macros" [class.invalid]="totalPct !== 100">
+                <div>Suma de Porcentajes: {{ totalPct }}%</div>
+                <div *ngIf="totalPct !== 100">⚠️ Debe ser 100%</div>
+            </div>
+
+        </main>
+
+        <!-- Métricas Extra -->
+        <section class="extra-metrics">
+            <div class="metric-card">
+                <small>70% PAVB</small>
+                <strong>{{ pavb | number:'1.1-2' }} g</strong>
+            </div>
+            <div class="metric-card">
+                <small>Prot / Kg Peso</small>
+                <strong>{{ protPorKilo | number:'1.1-2' }} g/kg</strong>
+            </div>
+        </section>
+    </div>
+</body>
