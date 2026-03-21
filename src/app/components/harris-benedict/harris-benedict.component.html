@@ -1,0 +1,46 @@
+<div class="container">
+    <header class="header-tool">
+        <div class="header-content">
+            <div class="header-text">
+                <h1>Ecuación de Harris-Benedict</h1>
+                <p class="subtitle">Cálculo del Gasto Metabólico en Reposo (GMR)</p>
+            </div>
+        </div>
+    </header>
+
+    <section class="config-panel">
+        <div class="gender-selector">
+            <button [class.active]="genero === 'hombre'" (click)="genero='hombre'; calcularGMR()">Hombre</button>
+            <button [class.active]="genero === 'mujer'" (click)="genero='mujer'; calcularGMR()">Mujer</button>
+        </div>
+
+        <div class="inputs-grid">
+            <div class="input-group">
+                <label>Peso (kg)</label>
+                <input type="number" [(ngModel)]="peso" (input)="calcularGMR()">
+            </div>
+            <div class="input-group">
+                <label>Talla (cm)</label>
+                <input type="number" [(ngModel)]="talla" (input)="calcularGMR()">
+            </div>
+            <div class="input-group">
+                <label>Edad (años)</label>
+                <input type="number" [(ngModel)]="edad" (input)="calcularGMR()">
+            </div>
+        </div>
+    </section>
+
+    <main class="result-section">
+        <div class="result-card">
+            <span class="result-label">Tu Gasto Metabólico Basal es de:</span>
+            <h2 class="result-value">{{ resultadoGMR | number:'1.0-0' }} <span>kcal/día</span></h2>
+            <p class="result-note">Esta es la energía mínima que tu cuerpo necesita para sobrevivir en reposo total.</p>
+        </div>
+    </main>
+
+    <footer class="formula-footer">
+        <p><strong>Fórmula utilizada:</strong></p>
+        <code *ngIf="genero === 'hombre'">66.47 + (13.75 x P) + (5 x T) - (6.75 x E)</code>
+        <code *ngIf="genero === 'mujer'">655.1 + (9.56 x P) + (1.85 x T) - (4.68 x E)</code>
+    </footer>
+</div>

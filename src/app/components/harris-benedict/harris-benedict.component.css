@@ -1,0 +1,197 @@
+:host {
+    --primary: #E63946;
+    --primary-dark: #D62828;
+    --primary-light: #FFF0F1;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --surface: #FFFFFF;
+}
+
+.container {
+    width: 95%;
+    max-width: 550px; 
+    margin: 15px auto;
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+/* Header */
+.header-tool {
+    background: var(--primary);
+    color: white;
+    padding: 35px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon { font-size: 1.8rem; }
+
+h1 {
+    font-size: 1.25rem;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin: 2px 0 0;
+}
+
+/* Panel de Configuración */
+.config-panel {
+    padding: 20px;
+}
+
+/* Selector de Género tipo Switch */
+.gender-selector {
+    display: flex;
+    background: #F1F5F9;
+    padding: 4px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.gender-selector button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.gender-selector button.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Grid de Inputs */
+.inputs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+    color: var(--text-main);
+    transition: border-color 0.2s;
+    background: #F8FAFC;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+}
+
+/* Sección de Resultado */
+.result-section {
+    background: #F8FAFC;
+    padding: 24px 20px;
+    text-align: center;
+}
+
+.result-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    border-bottom: 4px solid var(--primary);
+}
+
+.result-label {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.result-value {
+    color: var(--primary);
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 800;
+}
+
+.result-value span {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.result-note {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* Footer con la fórmula */
+.formula-footer {
+    padding: 15px;
+    text-align: center;
+    background: #fafafa;
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+code {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #F1F5F9;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+
+@media (max-width: 480px) {
+    .container {
+        margin: 10px auto;
+        border-radius: 12px;
+    }
+
+    .header-tool { padding: 30px; }
+    
+    .config-panel { padding: 15px; }
+
+    .inputs-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .result-value {
+        font-size: 2.2rem;
+    }
+}

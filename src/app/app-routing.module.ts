@@ -6,6 +6,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 import { IncapCalculatorComponent } from './components/incap-calculator/incap-calculator.component';
 import { MacroDistributionComponent } from './components/macro-distribution/macro-distribution.component';
+import { HarrisBenedictComponent } from './components/harris-benedict/harris-benedict.component';
 
 const routes: Routes = [
   { path: '', component: CalculatorComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
     canActivate: [AuthGuard] 
   },
   { path: 'macros', component: MacroDistributionComponent},
+  { path: 'harris-benedict', component: HarrisBenedictComponent},
   { path: '**', redirectTo: '' }
 ];
 

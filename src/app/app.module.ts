@@ -15,6 +15,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { IncapCalculatorComponent } from './components/incap-calculator/incap-calculator.component';
 import { MacroDistributionComponent } from './components/macro-distribution/macro-distribution.component';
+import { HarrisBenedictComponent } from './components/harris-benedict/harris-benedict.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MacroDistributionComponent } from './components/macro-distribution/macr
     DashboardComponent,
     NavbarComponent,
     IncapCalculatorComponent,
-    MacroDistributionComponent
+    MacroDistributionComponent,
+    HarrisBenedictComponent
   ],
   imports: [
     BrowserModule,
