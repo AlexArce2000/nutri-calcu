@@ -5,6 +5,27 @@
             <p>Selecciona un perfil guardado para continuar editando</p>
         </div>
     </div>
+    <div class="sort-container" *ngIf="sortSettings$ | async as settings">
+        <span class="sort-label">Ordenar por:</span>
+
+        <div class="sort-buttons">
+            <!-- Botón Fecha -->
+            <button [class.active]="settings.criterio === 'fecha'" (click)="cambiarOrden('fecha')">
+                📅 Fecha
+                <span class="arrow" *ngIf="settings.criterio === 'fecha'">
+                    {{ settings.direction === 'asc' ? '↑' : '↓' }}
+                </span>
+            </button>
+
+            <!-- Botón Nombre -->
+            <button [class.active]="settings.criterio === 'nombre'" (click)="cambiarOrden('nombre')">
+                🔤 Nombre
+                <span class="arrow" *ngIf="settings.criterio === 'nombre'">
+                    {{ settings.direction === 'asc' ? 'A-Z' : 'Z-A' }}
+                </span>
+            </button>
+        </div>
+    </div>
 
     <div class="dashboard-sections">
 
