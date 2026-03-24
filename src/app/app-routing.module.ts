@@ -7,6 +7,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { IncapCalculatorComponent } from './components/incap-calculator/incap-calculator.component';
 import { MacroDistributionComponent } from './components/macro-distribution/macro-distribution.component';
 import { HarrisBenedictComponent } from './components/harris-benedict/harris-benedict.component';
+import { AddFoodComponent } from './components/add-food/add-food.component';
 
 const routes: Routes = [
   { path: '', component: CalculatorComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   },
   { path: 'macros', component: MacroDistributionComponent},
   { path: 'harris-benedict', component: HarrisBenedictComponent},
+  { path: 'add-food', component: AddFoodComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];
 

@@ -39,6 +39,13 @@ export class CalculatorComponent implements OnInit {
   ngOnInit(): void {
     this.nutriService.getAlimentos().subscribe(data => {
       this.baseDatos = data;
+      this.authService.user$.subscribe(user => {
+        if (user) {
+          this.nutriService.getCustomFoods(user.uid, 'basica').subscribe((customFoods: any[]) => {
+            this.baseDatos = [...customFoods, ...data];
+          });
+        }
+      });
     });
     this.actualizarTotales();
   }
@@ -192,7 +199,7 @@ export class CalculatorComponent implements OnInit {
     if (this.historial.length === 0) {
       Swal.fire({
         icon: 'error',
-        title: 'Sin datos', 
+        title: 'Sin datos',
         text: 'No hay datos para exportar',
         confirmButtonColor: '#E63946',
         width: '300px',

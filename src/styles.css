@@ -13,5 +13,6 @@ body {
   margin: 0;
 }
 * {
+  font-family: 'Inter', sans-serif;
   box-sizing: border-box; /* Fundamental para que el padding no rompa el ancho */
 }

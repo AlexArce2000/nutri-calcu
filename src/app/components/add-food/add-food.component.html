@@ -1,0 +1,95 @@
+<div class="container">
+  <!-- ENCABEZADO DINÁMICO -->
+  <header class="header-tool">
+    <div class="header-content">
+      <span class="logo-icon">{{ editandoId ? '📝' : '➕' }}</span>
+      <div class="header-text">
+        <h1>{{ editandoId ? 'Editando Alimento' : 'Agregar Alimento Personalizado' }}</h1>
+        <p class="subtitle">Los productos guardados solo serán visibles para ti</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- PANEL DE CONFIGURACIÓN -->
+  <div class="config-panel">
+    <!-- Bloqueamos el cambio de tabla mientras se edita para evitar errores de nutrientes -->
+    <div class="form-row" *ngIf="!editandoId">
+      <div class="input-group">
+        <label>Selecciona Tabla</label>
+        <select [(ngModel)]="tipoSeleccionado" (change)="cambiarTipo()" class="select-main">
+          <option value="basica">Tabla Laura Joy (13 Nutrientes)</option>
+          <option value="incap">Tabla INCAP (28 Nutrientes)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="input-group">
+        <label>Nombre del Alimento</label>
+        <input type="text" [(ngModel)]="nombre" placeholder="Ej: Alimento Personalizado">
+      </div>
+      <div class="input-group">
+        <label>Medida Base</label>
+        <input type="text" [(ngModel)]="medida" placeholder="Ej: 1 taza o 100g">
+      </div>
+      <div class="input-group">
+        <label>Peso en Gramos</label>
+        <input type="number" [(ngModel)]="pesoBase">
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTRADA DE NUTRIENTES -->
+  <div class="nutri-entry-section">
+    <h3>Valores por cada {{pesoBase}}g</h3>
+    <div class="nutri-grid">
+      <div class="nutri-input" *ngFor="let ni of nutrientesInputs">
+        <label>{{ni.nombre}}</label>
+        <input type="number" [(ngModel)]="ni.valor">
+      </div>
+    </div>
+
+    <!-- BOTONES DE ACCIÓN DEL FORMULARIO -->
+    <div class="form-actions">
+      <button class="btn-save-food" (click)="guardarProducto()">
+        {{ editandoId ? 'Actualizar Cambios' : 'Guardar Producto' }}
+      </button>
+      
+      <button *ngIf="editandoId" class="btn-cancel" (click)="cancelarEdicion()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+
+  <!-- LISTADO DE ALIMENTOS PERSONALIZADOS (GESTIÓN) -->
+  <section class="my-foods-section">
+    <div class="section-header">
+      <h3>📦 Mis Alimentos ({{ tipoSeleccionado === 'basica' ? 'Laura Joy' : 'INCAP' }})</h3>
+      <p class="section-subtitle">Aparecerán automáticamente en el buscador de la calculadora</p>
+    </div>
+
+    <div class="foods-list">
+      <!-- Usamos el async pipe para la lista de Firestore -->
+      <div class="food-item" *ngFor="let f of misAlimentos$ | async">
+        <div class="food-info">
+          <span class="food-name">{{ f.nombre }}</span>
+          <span class="food-meta">{{ f.medida }} ({{ f.pesoBase }}g)</span>
+        </div>
+        
+        <div class="food-actions">
+          <button class="btn-edit-small" (click)="prepararEdicion(f)" title="Editar">
+            ✏️
+          </button>
+          <button class="btn-del-small" (click)="eliminar(f.id)" title="Eliminar">
+            🗑️
+          </button>
+        </div>
+      </div>
+
+      <!-- Estado vacío -->
+      <div class="empty-state" *ngIf="(misAlimentos$ | async)?.length === 0">
+        <p>No has agregado alimentos personalizados en esta tabla todavía.</p>
+      </div>
+    </div>
+  </section>
+</div>

@@ -20,6 +20,9 @@
                 Tabla de Laura Joy
             </a>
             <a routerLink="/incap" routerLinkActive="active" (click)="closeMenu()">Tabla INCAP</a>
+            <ng-container *ngIf="authService.user$ | async as user">
+                <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Mis Perfiles</a>
+            </ng-container>            
             <!-- DROPDOWN HERRAMIENTAS -->
             <div class="dropdown" [class.show]="toolsOpen" routerLinkActive="active-parent">
 
@@ -34,6 +37,7 @@
                     <a routerLink="/harris-benedict" routerLinkActive="active" (click)="closeMenu()">
                         Gasto Metabólico (Harris-Benedict)
                     </a>
+                    <a routerLink="/add-food" routerLinkActive="active" (click)="closeMenu()">Agregar Nuevo Alimento</a>
                 </div>
             </div>
             <!-- Si NO hay usuario -->
@@ -43,7 +47,7 @@
 
             <!-- Si HAY usuario -->
             <ng-container *ngIf="authService.user$ | async as user">
-                <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Mis Perfiles</a>
+                <!-- <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Mis Perfiles</a> -->
                 <span class="user-email">{{ user?.email }}</span>
 
                 <!-- Aquí encadenamos las dos funciones separadas por punto y coma -->

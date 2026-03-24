@@ -37,6 +37,13 @@ export class IncapCalculatorComponent implements OnInit {
   ngOnInit(): void {
     this.nutriService.getIncapAlimentos().subscribe(data => {
       this.baseDatos = data;
+      this.authService.user$.subscribe(user => {
+        if (user) {
+          this.nutriService.getCustomFoods(user.uid, 'incap').subscribe((customFoods: any[]) => {
+            this.baseDatos = [...customFoods, ...data];
+          });
+        }
+      });      
     });
     this.actualizarTotales();
   }

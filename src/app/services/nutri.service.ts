@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Firestore, collection, addDoc, query, where, collectionData, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NutriService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private firestore: Firestore) { }
 
   // 1. Leer el archivo CSV
   getAlimentos() {
@@ -54,7 +56,7 @@ export class NutriService {
           return {
             codigo: col[0],
             nombre: col[1],
-            pesoBase: 100, 
+            pesoBase: 100,
             nutrientes: [
               { n: "Agua", u: "%", v: col[2] },
               { n: "Energía", u: "Kcal", v: col[3] },
@@ -89,5 +91,26 @@ export class NutriService {
         }).filter(item => item !== null);
       })
     );
+  }
+  // Guardar producto nuevo
+  addCustomFood(food: any) {
+    const col = collection(this.firestore, 'productos_personalizados');
+    return addDoc(col, food);
+  }
+
+  // Obtener productos privados del usuario
+  getCustomFoods(userId: string, tipo: string) {
+    const col = collection(this.firestore, 'productos_personalizados');
+    const q = query(col, where('userId', '==', userId), where('tipoBase', '==', tipo));
+    return collectionData(q, { idField: 'id' }) as Observable<any[]>;
+  }
+  updateCustomFood(id: string, food: any) {
+    const docRef = doc(this.firestore, `productos_personalizados/${id}`);
+    return updateDoc(docRef, food);
+  }
+
+  deleteCustomFood(id: string) {
+    const docRef = doc(this.firestore, `productos_personalizados/${id}`);
+    return deleteDoc(docRef);
   }
 }
