@@ -139,7 +139,7 @@
                     <td *ngFor="let nut of nutrientesSeleccionados">
                         {{ item.valores[nut] | number:'1.1-2' }}
                     </td>
-                    <td class="actions-cell">
+                    <td class="sticky-col">
                         <!-- Cambiado de texto ✕ a material icon 'close' -->
                         <button class="btn-del" (click)="eliminar(item.id)">
                             <span class="material-icons">close</span>
