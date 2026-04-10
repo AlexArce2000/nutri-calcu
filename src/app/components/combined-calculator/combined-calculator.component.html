@@ -140,7 +140,11 @@
                         {{ item.valores[nut] | number:'1.1-2' }}
                     </td>
                     <td class="actions-cell">
-                        <button class="btn-del" (click)="eliminar(item.id)">✕</button>
+                        <!-- Cambiado de texto ✕ a material icon 'close' -->
+                        <button class="btn-del" (click)="eliminar(item.id)">
+                            <span class="material-icons">close</span>
+                        </button>
+
                         <button class="btn-edit" *ngIf="item.origen === 'hibrido'" (click)="prepararEdicion(item)">
                             <span class="material-icons">edit</span>
                         </button>

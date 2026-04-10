@@ -195,16 +195,17 @@
 .table-wrapper {
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; 
+    -webkit-overflow-scrolling: touch;     
+    background: white;
+    border-radius: 16px;
     border: 1px solid var(--border);
     margin-top: 15px;
 }
 
 .combined-table {
-    min-width: 900px; /* Forzamos un ancho mínimo para que los datos no se amontonen */
+    width: 100%;
     border-collapse: collapse;
 }
-
 
 .combined-table th {
     background: #1e293b;
@@ -213,27 +214,22 @@
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    text-align: center;
 }
-
 .combined-table td {
     padding: 15px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); /* La línea se adapta automáticamente al alto de la fila */
     text-align: center;
     font-size: 0.95rem;
+    vertical-align: middle; /* <--- ESTO centra todo verticalmente */
 }
-
 /* Columna de Alimento Pegajosa */
 .sticky-col {
     position: sticky;
     left: 0;
     background: white;
     z-index: 5;
-    min-width: 140px; /* Reducimos el ancho en general */
-    max-width: 200px;
-    font-size: 0.85rem;
-    white-space: normal; /* Permite que el nombre ocupe dos líneas si es largo */
-    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    vertical-align: middle; /* Centra el texto del alimento también */
+    text-align: left;       /* Pero el texto mejor alineado a la izquierda */
 }
 
 th.sticky-col { background: #1e293b; color: white; }
@@ -251,40 +247,50 @@ th.sticky-col { background: #1e293b; color: white; }
 
 /* Totales */
 .row-totales td {
-    background: #f8fafc;
+    background: #fcfcfc;
     font-weight: 800;
     color: var(--primary);
-    border-top: 2px solid var(--text-main);
     font-size: 1rem;
+    border-top: 2px solid var(--dark-blue);
 }
+
 
 /* Botón eliminar */
 .btn-del, .btn-edit {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    display: flex;           /* Para centrar el contenido interno */
-    align-items: center;     /* Centrar icono verticalmente */
-    justify-content: center; /* Centrar icono horizontalmente */
+    width: 32px;            /* Tamaño fijo igual para ambos */
+    height: 32px;
+    border-radius: 8px;     /* O 50% si los prefieres circulares */
+    display: inline-flex;   /* Importante para el centrado */
+    align-items: center;
+    justify-content: center;
     padding: 0;
-    border: none;
+    border: 1px solid var(--border);
+    background: white;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    color: var(--text-muted);
 }
+
 /* Ajuste específico para el tamaño de los iconos/letras */
 .btn-del {
     font-size: 14px;
-    font-weight: bold;
-    line-height: 1;
+    font-family: Arial, sans-serif; /* Asegura que la X no varíe por fuentes de sistema */
 }
 
 .btn-edit .material-icons {
-    font-size: 18px; /* Ajusta el tamaño del icono para que quepa bien en los 35px */
+    font-size: 18px;
+    display: block;
 }
+
 .btn-del:hover {
-    background: var(--primary);
-    color: white;
-    transform: scale(1.1);
+    background: #fee2e2;    /* Rojo muy claro */
+    color: #ef4444;         /* Rojo */
+    border-color: #ef4444;
+}
+.btn-edit:hover {
+    background: #e0f2fe;    /* Azul muy claro */
+    color: #3b82f6;         /* Azul */
+    border-color: #3b82f6;
 }
 .badge.incap { background: #e0f2fe; color: #0277bd; border: 1px solid #0277bd; }
 .badge.laura { background: #fee2e2; color: #d32f2f; border: 1px solid #d32f2f; }
@@ -296,7 +302,9 @@ th.sticky-col { background: #1e293b; color: white; }
     padding: 20px;
     animation: slideDown 0.3s ease-out;
 }
-
+.btn-del .material-icons, .btn-edit .material-icons {
+    font-size: 18px;
+}
 @keyframes slideDown {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -458,7 +466,6 @@ th.sticky-col { background: #1e293b; color: white; }
     gap: 8px;
     cursor: pointer;
 }
-
 .btn-action-outline:hover { background: #fef2f2; }
 .quick-actions {
     margin-top: 10px;
@@ -488,16 +495,28 @@ th.sticky-col { background: #1e293b; color: white; }
 
 .actions-cell {
     display: flex;
-    gap: 8px;               /* Espacio entre los botones */
-    justify-content: center; /* Centrado horizontal */
-    align-items: center;     /* Centrado vertical (esto los pone al mismo nivel) */
-    vertical-align: middle;
+    gap: 8px;               /* Espacio entre botones */
+    justify-content: center;
+    align-items: center;
+    height: 100%;           /* Ocupar el alto de la celda */
+    border-bottom: none !important; /* Limpieza estética */
 }
 
 
 
-.btn-edit:hover { background: #bae6fd; }
+/* .btn-edit:hover { background: #bae6fd; } */
 /* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+    .chips-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .search-grid { grid-template-columns: 1fr; }
+    .chips-grid { grid-template-columns: repeat(2, 1fr); }
+    .actions-bar-combined { flex-direction: column; gap: 20px; }
+    .right-actions { width: 100%; flex-direction: column; }
+    .btn-action-outline { width: 100%; justify-content: center; }
+}
 @media (max-width: 480px) {
     .sticky-col {
         position: static !important; /* Deja de estar pegada a la izquierda */

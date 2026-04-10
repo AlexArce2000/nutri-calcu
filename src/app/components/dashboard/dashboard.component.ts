@@ -90,9 +90,14 @@ export class DashboardComponent implements OnInit {
 
   cargarCombinado(perfil: any) {
     localStorage.setItem('combinedHistorial', JSON.stringify(perfil.items));
+
+    // Si el perfil guardado tiene información de las columnas, las guardamos en LocalStorage
+    if (perfil.nutrientesActivos) {
+      localStorage.setItem('combinedColumns', JSON.stringify(perfil.nutrientesActivos));
+    }
+
     this.router.navigate(['/combinada']);
   }
-
   // Borrado genérico con SweetAlert
   async eliminar(id: string, coleccion: string) {
     const res = await Swal.fire({

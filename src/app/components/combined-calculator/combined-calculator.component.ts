@@ -60,7 +60,7 @@ export class CombinedCalculatorComponent implements OnInit {
     'Purinas (mg)': ['Purinas', null]
   };
 
-  nutrientesSeleccionados: string[] = ['Energía (kcal)', 'Proteína (g)', 'Carbohidratos (g)', 'Grasa Total (g)'];
+  nutrientesSeleccionados: string[] = JSON.parse(localStorage.getItem('combinedColumns') || '["Energía (kcal)", "Proteína (g)", "Carbohidratos (g)", "Grasa Total (g)"]');
 
   constructor(private nutriService: NutriService, public authService: AuthService,
     private firestore: Firestore) { }
@@ -68,6 +68,10 @@ export class CombinedCalculatorComponent implements OnInit {
   ngOnInit(): void {
     this.nutriService.getIncapAlimentos().subscribe(data => this.baseIncap = data);
     this.nutriService.getAlimentos().subscribe(data => this.baseLaura = data);
+    const savedColumns = localStorage.getItem('combinedColumns');
+    if (savedColumns) {
+      this.nutrientesSeleccionados = JSON.parse(savedColumns);
+    }
   }
   // --- PERSISTENCIA LOCAL ---
   actualizarLocalStorage() {
@@ -366,5 +370,7 @@ export class CombinedCalculatorComponent implements OnInit {
     const idx = this.nutrientesSeleccionados.indexOf(nut);
     if (idx > -1) this.nutrientesSeleccionados.splice(idx, 1);
     else this.nutrientesSeleccionados.push(nut);
+    localStorage.setItem('combinedColumns', JSON.stringify(this.nutrientesSeleccionados));
+
   }
 }
