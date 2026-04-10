@@ -64,7 +64,7 @@ export class IncapCalculatorComponent implements OnInit {
     }
     this.filteredAlimentos = this.baseDatos.filter(a =>
       a.nombre.toLowerCase().includes(term)
-    ).slice(0, 10);
+    );
   }
 
   seleccionar(item: any) {
