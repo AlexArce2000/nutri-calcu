@@ -1,0 +1,179 @@
+<div class="container-fluid">
+    <header class="header-combined">
+        <span class="material-icons header-icon">layers</span>
+        <div class="header-text-box">
+            <h1>Análisis de Tablas Combinadas</h1>
+            <p>Mezcla alimentos de INCAP y Laura Joy en una sola dieta</p>
+        </div>
+    </header>
+
+    <!-- ÁREA DE BUSCADORES -->
+    <div class="search-grid">
+        <!-- BUSCADOR INCAP -->
+        <div class="search-box incap-border">
+            <label>Buscar en INCAP (Técnica)</label>
+            <div class="input-inline">
+                <input type="text" [(ngModel)]="searchIncap" (input)="buscarIncap()"
+                    [style.border-color]="draftIncap ? '#0277bd' : '#ccc'" placeholder="Escribe para buscar...">
+                <input type="number" [(ngModel)]="cantidadIncap" class="input-qty">
+            </div>
+            <div class="quick-actions" *ngIf="draftIncap && !draftLaura && searchIncap !== ''">
+                <button class="btn-add-simple" (click)="agregarSimple('incap')">
+                    <span class="material-icons">add</span> Solo este (INCAP)
+                </button>
+            </div>
+            <!-- CAMBIO AQUÍ: seleccionarIncap -->
+            <div class="results-pop" *ngIf="filteredIncap.length > 0">
+                <div *ngFor="let a of filteredIncap" (click)="seleccionarIncap(a)">
+                    {{a.nombre}}
+                </div>
+            </div>
+        </div>
+
+        <!-- BUSCADOR LAURA JOY -->
+        <div class="search-box laura-border">
+            <label>Buscar en Laura Joy (Casera)</label>
+            <div class="input-inline">
+                <input type="text" [(ngModel)]="searchLaura" (input)="buscarLaura()"
+                    [style.border-color]="draftLaura ? '#E63946' : '#ccc'" placeholder="Escribe para buscar...">
+                <input type="number" [(ngModel)]="cantidadLaura" class="input-qty">
+            </div>
+            <div class="quick-actions" *ngIf="draftLaura && !draftIncap && searchLaura !== ''">
+                <button class="btn-add-simple" (click)="agregarSimple('laura')">
+                    <span class="material-icons">add</span> Solo este (Laura)
+                </button>
+            </div>
+            <!-- CAMBIO AQUÍ: seleccionarLaura -->
+            <div class="results-pop" *ngIf="filteredLaura.length > 0">
+                <div *ngFor="let a of filteredLaura" (click)="seleccionarLaura(a)">
+                    {{a.nombre}} ({{a.medida}})
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CONFIGURACIÓN DE COLUMNAS -->
+    <div class="nutrient-selector">
+        <h4><span class="material-icons">tune</span> Configurar Columnas Visibles</h4>
+        <div class="chips-grid">
+            <div class="chip" *ngFor="let nut of totalKeys" [class.active]="nutrientesSeleccionados.includes(nut)"
+                (click)="toggleNutriente(nut)">
+                <span class="material-icons chip-icon">
+                    {{ nutrientesSeleccionados.includes(nut) ? 'check_circle' : 'add_circle_outline' }}
+                </span>
+                {{ nut }}
+            </div>
+        </div>
+    </div>
+    <!-- PANEL DE FUSIÓN (Aparece cuando hay dos alimentos seleccionados) -->
+    <div class="fusion-panel" id="fusionPanel" *ngIf="draftIncap && draftLaura">
+        <div class="fusion-header">
+            <span class="material-icons">hub</span>
+            <h3>Constructor de Alimento Híbrido</h3>
+        </div>
+
+        <div class="fusion-body">
+            <div class="name-picker">
+                <label>Usar nombre de:</label>
+                <div class="radio-group">
+                    <button [class.active]="nombreElegido === 'incap'" (click)="nombreElegido = 'incap'">
+                        {{ draftIncap.nombre }} (INCAP)
+                    </button>
+                    <button [class.active]="nombreElegido === 'laura'" (click)="nombreElegido = 'laura'">
+                        {{ draftLaura.nombre }} (Laura Joy)
+                    </button>
+                </div>
+            </div>
+
+            <div class="nutrient-merger">
+                <p class="merger-instruction">Selecciona la fuente de datos para cada nutriente:</p>
+                <div class="merger-grid">
+                    <div class="merger-row header">
+                        <div>Nutriente</div>
+                        <div>Usar INCAP</div>
+                        <div>Usar Laura Joy</div>
+                    </div>
+                    <div class="merger-row" *ngFor="let nut of nutrientesSeleccionados">
+                        <div class="nut-name">{{ nut }}</div>
+                        <div class="check-cell">
+                            <input type="radio" [name]="nut" (change)="fuentesConfig[nut] = 'incap'"
+                                [checked]="fuentesConfig[nut] === 'incap'">
+                        </div>
+                        <div class="check-cell">
+                            <input type="radio" [name]="nut" (change)="fuentesConfig[nut] = 'laura'"
+                                [checked]="fuentesConfig[nut] === 'laura'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fusion-footer">
+            <button class="btn-merge" (click)="confirmarFusion()">
+                <span class="material-icons">auto_fix_high</span> Confirmar Fusión y Agregar
+            </button>
+            <button class="btn-cancel-fusion" (click)="cancelarFusion()">Cancelar</button>
+        </div>
+    </div>
+
+
+
+    <!-- TABLA ÚNICA -->
+    <div class="table-wrapper">
+        <table class="combined-table">
+            <thead>
+                <tr>
+                    <th class="sticky-col">Alimento</th>
+                    <th>Cant.</th>
+                    <th>Origen</th>
+                    <th *ngFor="let nut of nutrientesSeleccionados">{{ nut }}</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of historialCombinado">
+                    <td class="sticky-col">{{ item.nombre }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="item.origen">{{ item.origen | uppercase }}</span>
+                    </td>
+                    <td *ngFor="let nut of nutrientesSeleccionados">
+                        {{ item.valores[nut] | number:'1.1-2' }}
+                    </td>
+                    <td class="actions-cell">
+                        <button class="btn-del" (click)="eliminar(item.id)">✕</button>
+                        <button class="btn-edit" *ngIf="item.origen === 'hibrido'" (click)="prepararEdicion(item)">
+                            <span class="material-icons">edit</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot *ngIf="historialCombinado.length > 0">
+                <tr class="row-totales">
+                    <td colspan="3" class="sticky-col">TOTALES COMBINADOS</td>
+                    <td *ngFor="let nut of nutrientesSeleccionados">
+                        {{ calcularTotal(nut) | number:'1.1-2' }}
+                    </td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="actions-bar-combined">
+        <div class="left-actions">
+            <button class="btn-action-outline" (click)="borrarTodo()" *ngIf="historialCombinado.length > 0">
+                <span class="material-icons">delete_forever</span> Borrar Todo
+            </button>
+        </div>
+
+        <div class="right-actions">
+            <button class="btn-action-excel" (click)="exportar()" *ngIf="historialCombinado.length > 0">
+                <span class="material-icons">description</span> Exportar Excel
+            </button>
+
+            <button class="btn-action-cloud" (click)="guardarEnNube()"
+                *ngIf="(authService.user$ | async) && historialCombinado.length > 0">
+                <span class="material-icons">cloud_upload</span> Guardar en Mis Perfiles
+            </button>
+        </div>
+    </div>
+</div>

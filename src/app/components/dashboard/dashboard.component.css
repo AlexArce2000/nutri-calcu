@@ -392,7 +392,76 @@ button {
 .perfil-card {
     animation: fadeIn 0.3s ease-out;
 }
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 Columnas */
+  gap: 20px;
+  align-items: start;
+}
 
+.category-section {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid;
+}
+
+/* Temas de Color */
+.basic-theme .section-title { color: #E63946; border-color: #E63946; }
+.incap-theme .section-title { color: #0277bd; border-color: #0277bd; }
+.combined-theme .section-title { color: #6366f1; border-color: #6366f1; } /* Indigo para combinadas */
+
+.btn-load-combined {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-del {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fee2e2;
+  color: #ef4444;
+  border: none;
+  border-radius: 6px;
+  padding: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-del .material-icons { font-size: 1.2rem; }
+.btn-del:hover { background: #ef4444; color: white; }
+
+.sort-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-buttons .material-icons { font-size: 1.1rem; }
+
+@media (max-width: 1100px) {
+  .dashboard-grid { grid-template-columns: 1fr 1fr; } /* 2 columnas en tablets */
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid { grid-template-columns: 1fr; } /* 1 columna en móviles */
+}
 @keyframes fadeIn {
     from {
         opacity: 0;

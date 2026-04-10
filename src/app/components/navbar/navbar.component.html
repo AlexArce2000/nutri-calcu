@@ -14,15 +14,13 @@
 
         <!-- Menú de navegación -->
         <div class="menu" [class.open]="menuOpen">
-
-            <!-- Agregamos (click)="closeMenu()" -->
             <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">
-                Tabla de Laura Joy
+                Tabla Combinada de nutrientes
             </a>
-            <a routerLink="/incap" routerLinkActive="active" (click)="closeMenu()">Tabla INCAP</a>
+
             <ng-container *ngIf="authService.user$ | async as user">
                 <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Mis Perfiles</a>
-            </ng-container>            
+            </ng-container>
             <!-- DROPDOWN HERRAMIENTAS -->
             <div class="dropdown" [class.show]="toolsOpen" routerLinkActive="active-parent">
 
@@ -31,6 +29,10 @@
                 </button>
 
                 <div class="dropdown-menu">
+                    <a routerLink="/laurajoy" routerLinkActive="active" (click)="closeMenu()">
+                        Tabla de Laura Joy
+                    </a>
+                    <a routerLink="/incap" routerLinkActive="active" (click)="closeMenu()">Tabla INCAP</a>
                     <a routerLink="/macros" routerLinkActive="active" (click)="closeMenu()">
                         Distribución de Macros
                     </a>

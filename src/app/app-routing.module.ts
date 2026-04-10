@@ -8,9 +8,10 @@ import { IncapCalculatorComponent } from './components/incap-calculator/incap-ca
 import { MacroDistributionComponent } from './components/macro-distribution/macro-distribution.component';
 import { HarrisBenedictComponent } from './components/harris-benedict/harris-benedict.component';
 import { AddFoodComponent } from './components/add-food/add-food.component';
+import { CombinedCalculatorComponent } from './components/combined-calculator/combined-calculator.component';
 
 const routes: Routes = [
-  { path: '', component: CalculatorComponent },
+  { path: 'laurajoy', component: CalculatorComponent },
   { path: 'incap', component: IncapCalculatorComponent },
   { path: 'login', component: LoginComponent },
   { 
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'macros', component: MacroDistributionComponent},
   { path: 'harris-benedict', component: HarrisBenedictComponent},
   { path: 'add-food', component: AddFoodComponent, canActivate: [AuthGuard] },
+  { path: '', component: CombinedCalculatorComponent},
   { path: '**', redirectTo: '' }
 ];
 

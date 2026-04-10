@@ -17,6 +17,7 @@ import { IncapCalculatorComponent } from './components/incap-calculator/incap-ca
 import { MacroDistributionComponent } from './components/macro-distribution/macro-distribution.component';
 import { HarrisBenedictComponent } from './components/harris-benedict/harris-benedict.component';
 import { AddFoodComponent } from './components/add-food/add-food.component';
+import { CombinedCalculatorComponent } from './components/combined-calculator/combined-calculator.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AddFoodComponent } from './components/add-food/add-food.component';
     IncapCalculatorComponent,
     MacroDistributionComponent,
     HarrisBenedictComponent,
-    AddFoodComponent
+    AddFoodComponent,
+    CombinedCalculatorComponent
   ],
   imports: [
     BrowserModule,

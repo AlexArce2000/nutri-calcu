@@ -1,45 +1,41 @@
-<div class="container">
+<div class="container-fluid">
     <div class="header-dashboard">
         <div class="header-text">
             <h2>Gestión de Perfiles en la Nube</h2>
             <p>Selecciona un perfil guardado para continuar editando</p>
         </div>
     </div>
+
     <div class="sort-container" *ngIf="sortSettings$ | async as settings">
         <span class="sort-label">Ordenar por:</span>
-
         <div class="sort-buttons">
-            <!-- Botón Fecha -->
             <button [class.active]="settings.criterio === 'fecha'" (click)="cambiarOrden('fecha')">
-                📅 Fecha
-                <span class="arrow" *ngIf="settings.criterio === 'fecha'">
-                    {{ settings.direction === 'asc' ? '↑' : '↓' }}
+                <span class="material-icons">calendar_today</span> Fecha
+                <!-- AGREGA 'material-icons' AQUÍ ABAJO -->
+                <span class="material-icons arrow" *ngIf="settings.criterio === 'fecha'">
+                    {{ settings.direction === 'asc' ? 'expand_less' : 'expand_more' }}
                 </span>
             </button>
 
-            <!-- Botón Nombre -->
             <button [class.active]="settings.criterio === 'nombre'" (click)="cambiarOrden('nombre')">
-                🔤 Nombre
-                <span class="arrow" *ngIf="settings.criterio === 'nombre'">
-                    {{ settings.direction === 'asc' ? 'A-Z' : 'Z-A' }}
+                <span class="material-icons">sort_by_alpha</span> Nombre
+                <!-- AGREGA 'material-icons' AQUÍ ABAJO -->
+                <span class="material-icons arrow" *ngIf="settings.criterio === 'nombre'">
+                    {{ settings.direction === 'asc' ? 'expand_less' : 'expand_more' }}
                 </span>
             </button>
         </div>
     </div>
 
-    <div class="dashboard-sections">
-
+    <div class="dashboard-grid">
+        <!-- SECCIÓN LAURA JOY -->
         <section class="category-section basic-theme">
             <div class="section-title">
-                <span class="icon">🍎</span>
-                <h3>Perfiles Tabla de Laura Joy</h3>
+                <span class="material-icons">restaurant</span>
+                <h3>Perfiles Tabla Laura Joy</h3>
             </div>
-
             <div class="cards-container">
-                <div class="empty-msg" *ngIf="(perfilesBasicos$ | async)?.length === 0">
-                    No hay perfiles básicos guardados.
-                </div>
-
+                <div class="empty-msg" *ngIf="(perfilesBasicos$ | async)?.length === 0">Vacío</div>
                 <div class="perfil-card" *ngFor="let p of perfilesBasicos$ | async">
                     <div class="card-info">
                         <h4>{{ p.nombrePerfil }}</h4>
@@ -47,36 +43,55 @@
                     </div>
                     <div class="card-btns">
                         <button class="btn-load" (click)="cargarBasico(p)">Cargar</button>
-                        <button class="btn-del" (click)="eliminarBasico(p.id)">🗑️</button>
+                        <button class="btn-del" (click)="eliminar(p.id, 'perfiles')"><span
+                                class="material-icons">delete</span></button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!--  INCAP (AZUL) -->
+        <!-- SECCIÓN INCAP -->
         <section class="category-section incap-theme">
             <div class="section-title">
-                <span class="icon">🔬</span>
-                <h3>Perfiles Tabla INCAP (TCA)</h3>
+                <span class="material-icons">biotech</span>
+                <h3>Perfiles Tabla INCAP</h3>
             </div>
-
             <div class="cards-container">
-                <div class="empty-msg" *ngIf="(perfilesIncap$ | async)?.length === 0">
-                    No hay perfiles INCAP guardados.
-                </div>
-
+                <div class="empty-msg" *ngIf="(perfilesIncap$ | async)?.length === 0">Vacío</div>
                 <div class="perfil-card" *ngFor="let p of perfilesIncap$ | async">
                     <div class="card-info">
                         <h4>{{ p.perfilNombre }}</h4>
-                        <small>{{ p.items.length }} alimentos • {{ p.fecha | date:'dd/MM/yyyy' }}</small>
+                        <small>{{ p.items.length }} ítems • {{ p.fecha | date:'dd/MM/yyyy' }}</small>
                     </div>
                     <div class="card-btns">
                         <button class="btn-load-incap" (click)="cargarIncap(p)">Cargar</button>
-                        <button class="btn-del" (click)="eliminarIncap(p.id)">🗑️</button>
+                        <button class="btn-del" (click)="eliminar(p.id, 'perfiles_incap')"><span
+                                class="material-icons">delete</span></button>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- SECCIÓN COMBINADA -->
+        <section class="category-section combined-theme">
+            <div class="section-title">
+                <span class="material-icons">layers</span>
+                <h3>Análisis Combinados</h3>
+            </div>
+            <div class="cards-container">
+                <div class="empty-msg" *ngIf="(perfilesCombinados$ | async)?.length === 0">Vacío</div>
+                <div class="perfil-card" *ngFor="let p of perfilesCombinados$ | async">
+                    <div class="card-info">
+                        <h4>{{ p.perfilNombre }}</h4>
+                        <small>{{ p.items.length }} mezclas • {{ p.fecha | date:'dd/MM/yyyy' }}</small>
+                    </div>
+                    <div class="card-btns">
+                        <button class="btn-load-combined" (click)="cargarCombinado(p)">Cargar</button>
+                        <button class="btn-del" (click)="eliminar(p.id, 'perfiles_combinados')"><span
+                                class="material-icons">delete</span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
