@@ -66,8 +66,28 @@ export class CombinedCalculatorComponent implements OnInit {
     private firestore: Firestore) { }
 
   ngOnInit(): void {
-    this.nutriService.getIncapAlimentos().subscribe(data => this.baseIncap = data);
-    this.nutriService.getAlimentos().subscribe(data => this.baseLaura = data);
+    this.nutriService.getIncapAlimentos().subscribe(csvIncap => {
+      this.baseIncap = csvIncap;
+      this.authService.user$.subscribe(user => {
+        if (user) {
+          this.nutriService.getCustomFoods(user.uid, 'incap').subscribe(customIncap => {
+            this.baseIncap = [...customIncap, ...csvIncap];
+          });
+        }
+      });
+    });
+
+    this.nutriService.getAlimentos().subscribe(csvLaura => {
+      this.baseLaura = csvLaura;
+      this.authService.user$.subscribe(user => {
+        if (user) {
+          this.nutriService.getCustomFoods(user.uid, 'basica').subscribe(customLaura => {
+            this.baseLaura = [...customLaura, ...csvLaura];
+          });
+        }
+      });
+    });
+
     const savedColumns = localStorage.getItem('combinedColumns');
     if (savedColumns) {
       this.nutrientesSeleccionados = JSON.parse(savedColumns);
