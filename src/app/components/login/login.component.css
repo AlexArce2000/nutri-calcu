@@ -134,7 +134,29 @@ input:focus {
 .btn-auth:active {
     transform: translateY(0);
 }
+.forgot-password-below {
+    text-align: center; /* Centra el enlace */
+    margin-top: 15px;   /* Separa del botón Ingresar */
+    margin-bottom: 5px;
+}
 
+.link-forgot-simple {
+    color: #888;        /* Color gris suave para que no compita con el botón */
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.link-forgot-simple:hover {
+    color: #f44336;     /* Se pone rojo al pasar el mouse */
+    text-decoration: underline;
+}
+
+/* Opcional: ajustar el margen del contenedor de abajo para que no queden tan pegados */
+.toggle-container {
+    margin-top: 20px;
+}
 /* --- TEXTO INFERIOR (TOGGLE) --- */
 .toggle-auth {
     margin-top: 32px;

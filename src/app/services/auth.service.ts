@@ -5,7 +5,8 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signOut, 
-  User 
+  User,
+  sendPasswordResetEmail 
 } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 
@@ -31,4 +32,8 @@ export class AuthService {
   logout() {
     return signOut(this.auth as any);
   }
+
+  recuperarPassword(email: string) {
+    return sendPasswordResetEmail(this.auth as any, email);
+  }  
 }

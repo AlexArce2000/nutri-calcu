@@ -39,7 +39,11 @@
                 <span *ngIf="modoRegistro" class="fade-in">Registrarse</span>
             </button>
         </form>
-
+        <div class="forgot-password-below" *ngIf="!modoRegistro">
+            <a (click)="onRecuperarPassword()" class="link-forgot-simple">
+                ¿Olvidaste tu contraseña?
+            </a>
+        </div>
         <!-- Link de cambio mejorado -->
         <div class="toggle-container">
             <p class="toggle-auth" (click)="modoRegistro = !modoRegistro">
