@@ -260,7 +260,12 @@ button {
     align-items: center;
     justify-content: center;
 }
-
+.history {
+    font-size: 1.4rem;
+    display: inline-flex; 
+    align-items: center;  
+    gap: 10px;     
+}
 .btn-save {
     background: var(--primary);
     color: var(--surface);
@@ -269,8 +274,10 @@ button {
     width: 100%;
     max-width: 400px;
     box-shadow: 0 4px 14px 0 rgba(230, 57, 70, 0.39);
-
-    display: block;
+    display: flex; 
+    align-items: center;  
+    justify-content: center;
+    gap: 8px;
     margin: 50px auto 0 auto; 
 }
 
@@ -286,10 +293,24 @@ button {
 .btn-import { background: var(--text-main); color: white; padding: 10px 16px; }
 .btn-import:hover { background: #0F172A; }
 
-.btn-clear { background: var(--text-muted); color: white; padding: 10px 16px; }
+.btn-clear { 
+    background: var(--text-muted); 
+    color: white; 
+    padding: 10px 16px; 
+    display: inline-flex; 
+    align-items: center;  
+    gap: 8px;    
+}
 .btn-clear:hover { background: #475569; }
 
-.btn-cloud { background: var(--info); color: white; padding: 10px 16px; }
+.btn-cloud { 
+    background: var(--info); 
+    color: white; 
+    padding: 10px 16px;     
+    display: inline-flex; 
+    align-items: center;  
+    gap: 8px;  
+}
 .btn-cloud:hover { background: #2563EB; }
 
 .btn-remove {

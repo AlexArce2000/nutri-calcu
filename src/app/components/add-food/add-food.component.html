@@ -2,7 +2,9 @@
   <!-- ENCABEZADO DINÁMICO -->
   <header class="header-tool">
     <div class="header-content">
-      <span class="logo-icon">{{ editandoId ? '📝' : '➕' }}</span>
+      <span class="material-icons logo-icon">
+        {{ editandoId ? 'edit_note' : 'add_circle' }}
+      </span>
       <div class="header-text">
         <h1>{{ editandoId ? 'Editando Alimento' : 'Agregar Alimento Personalizado' }}</h1>
         <p class="subtitle">Los productos guardados solo serán visibles para ti</p>
@@ -12,7 +14,6 @@
 
   <!-- PANEL DE CONFIGURACIÓN -->
   <div class="config-panel">
-    <!-- Bloqueamos el cambio de tabla mientras se edita para evitar errores de nutrientes -->
     <div class="form-row" *ngIf="!editandoId">
       <div class="input-group">
         <label>Selecciona Tabla</label>
@@ -52,10 +53,12 @@
     <!-- BOTONES DE ACCIÓN DEL FORMULARIO -->
     <div class="form-actions">
       <button class="btn-save-food" (click)="guardarProducto()">
+        <span class="material-icons">save</span>
         {{ editandoId ? 'Actualizar Cambios' : 'Guardar Producto' }}
       </button>
       
       <button *ngIf="editandoId" class="btn-cancel" (click)="cancelarEdicion()">
+        <span class="material-icons">cancel</span>
         Cancelar
       </button>
     </div>
@@ -64,12 +67,14 @@
   <!-- LISTADO DE ALIMENTOS PERSONALIZADOS (GESTIÓN) -->
   <section class="my-foods-section">
     <div class="section-header">
-      <h3>📦 Mis Alimentos ({{ tipoSeleccionado === 'basica' ? 'Laura Joy' : 'INCAP' }})</h3>
+      <h3>
+        <span class="material-icons">inventory_2</span> 
+        Mis Alimentos ({{ tipoSeleccionado === 'basica' ? 'Laura Joy' : 'INCAP' }})
+      </h3>
       <p class="section-subtitle">Aparecerán automáticamente en el buscador de la calculadora</p>
     </div>
 
     <div class="foods-list">
-      <!-- Usamos el async pipe para la lista de Firestore -->
       <div class="food-item" *ngFor="let f of misAlimentos$ | async">
         <div class="food-info">
           <span class="food-name">{{ f.nombre }}</span>
@@ -78,16 +83,16 @@
         
         <div class="food-actions">
           <button class="btn-edit-small" (click)="prepararEdicion(f)" title="Editar">
-            ✏️
+            <span class="material-icons">edit</span>
           </button>
           <button class="btn-del-small" (click)="eliminar(f.id)" title="Eliminar">
-            🗑️
+            <span class="material-icons">delete</span>
           </button>
         </div>
       </div>
 
-      <!-- Estado vacío -->
       <div class="empty-state" *ngIf="(misAlimentos$ | async)?.length === 0">
+        <span class="material-icons">info</span>
         <p>No has agregado alimentos personalizados en esta tabla todavía.</p>
       </div>
     </div>

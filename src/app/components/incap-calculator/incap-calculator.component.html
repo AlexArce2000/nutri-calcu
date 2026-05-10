@@ -52,7 +52,9 @@
                     <div class="result-cell">{{ calcularNutriente(nut.v) | number:'1.2-2' }}</div>
                 </div>
             </div>
-            <button class="btn-save" (click)="guardar()">Guardar en la Tabla</button>
+            <button class="btn-save" (click)="guardar()">
+                <span class="material-icons">save</span> Guardar en la Tabla
+            </button>
         </main>
         <footer>
             <div class="empty-state" *ngIf="!seleccionado">Busque y seleccione un alimento</div>
@@ -61,11 +63,15 @@
 
         <section class="export-section">
             <div class="export-header">
-                <h2>Historial INCAP Completo</h2>
+                <h2><span class="material-icons history">history</span>Historial INCAP Completo</h2>
                 <div class="button-group">
-                    <button class="btn-import" (click)="fileInput.click()">Importar Tabla</button>
+                    <button class="btn-import" (click)="fileInput.click()">
+                        <span class="material-icons">file_upload</span> Importar Tabla
+                    </button>
                     <input type="file" #fileInput style="display:none" accept=".csv" (change)="importar($event)">
-                    <button class="btn-excel" (click)="exportar()">Exportar a Excel</button>
+                    <button class="btn-excel" (click)="exportar()">
+                        <span class="material-icons">description</span> Exportar a Excel
+                    </button>
                 </div>
             </div>
 
@@ -108,9 +114,10 @@
             </div>
 
             <div class="button-group">
-                <button class="btn-clear" (click)="borrarTodo()" *ngIf="historial.length > 0">Borrar Todo</button>
+                <button class="btn-clear" (click)="borrarTodo()" *ngIf="historial.length > 0">
+                    <span class="material-icons">delete_sweep</span> Borrar Todo</button>
                 <button *ngIf="authService.user$ | async" class="btn-cloud" (click)="guardarEnNube()">
-                    ☁️ Guardar Perfil en la Nube
+                    <span class="material-icons">cloud_upload</span>Guardar Perfil en la Nube
                 </button>
             </div>
         </section>

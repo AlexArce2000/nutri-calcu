@@ -55,7 +55,9 @@
                 </div>
             </div>
             <div class="actions-bar">
-                <button class="btn-save" (click)="guardar()">Guardar en Tabla</button>
+                <button class="btn-save" (click)="guardar()">
+                    <span class="material-icons">save</span> Guardar en Tabla
+                </button>
             </div>
         </main>
 
@@ -66,11 +68,15 @@
 
         <section class="export-section">
             <div class="export-header">
-                <h2>Historial de Cálculos</h2>
+                <h2><span class="material-icons history">history</span>Historial de Cálculos</h2>
                 <div class="button-group">
-                    <button class="btn-import" (click)="fileInput.click()">Importar Tabla</button>
+                    <button class="btn-import" (click)="fileInput.click()">
+                        <span class="material-icons">file_upload</span> Importar Tabla
+                    </button>
                     <input type="file" #fileInput style="display:none" accept=".csv" (change)="importar($event)">
-                    <button class="btn-excel" (click)="exportar()">Exportar a Excel</button>
+                    <button class="btn-excel" (click)="exportar()">
+                        <span class="material-icons">description</span> Exportar a Excel
+                    </button>
                 </div>
             </div>
 
@@ -142,9 +148,10 @@
                 </table>
             </div>
             <div class="button-group">
-                <button class="btn-clear" (click)="borrarTodo()" *ngIf="historial.length > 0">Borrar Todo</button>
-                <button *ngIf="authService.user$ | async" (click)="guardarEnNube()" class="btn-cloud">
-                    ☁️ Guardar Perfil en la Nube
+                <button class="btn-clear" (click)="borrarTodo()" *ngIf="historial.length > 0">
+                    <span class="material-icons">delete_sweep</span> Borrar Todo</button>
+                <button *ngIf="authService.user$ | async" class="btn-cloud" (click)="guardarEnNube()">
+                    <span class="material-icons">cloud_upload</span>Guardar Perfil en la Nube
                 </button>
             </div>
         </section>

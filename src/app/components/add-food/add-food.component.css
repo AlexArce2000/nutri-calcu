@@ -201,11 +201,16 @@ h1 {
     background-color: #64748b; /* Gris azulado */
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px #64748b;
 }
 .btn-cancel:hover {
     background-color: #475569;
@@ -248,11 +253,13 @@ h1 {
 
 .btn-edit-small, .btn-del-small {
     background: white;
+    align-items: center;
     border: 1px solid #E2E8F0;
-    padding: 8px;
+    padding: 5px;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
+    justify-self: center;
 }
 
 .btn-edit-small:hover { background: #eff6ff; border-color: #3b82f6; }

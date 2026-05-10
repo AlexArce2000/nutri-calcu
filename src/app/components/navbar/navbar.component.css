@@ -64,18 +64,6 @@
     letter-spacing: -0.02em;
 }
 
-.badge-beta {
-    background: var(--primary-light);
-    color: var(--primary);
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 2px;
-    /* Pequeño ajuste visual */
-}
 
 /* --- MENÚ DE ENLACES --- */
 .menu {
@@ -269,7 +257,67 @@
     background-color: var(--primary-light);
     color: var(--primary) !important;
 }
+/* Contenedor principal del logo */
+.logo-group {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    /* Reducimos el espacio entre el SVG y el texto */
+    gap: 0px; 
+}
 
+/* Ajuste del SVG */
+.logo-apple {
+    width: 45px;  /* Tamaño más equilibrado */
+    height: 45px;
+    /* Tu SVG tiene mucho espacio vacío interno, 
+       este margen negativo lo acerca visualmente al texto */
+    margin-right: -5px; 
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-group:hover .logo-apple {
+    transform: rotate(-12deg) scale(1.1);
+}
+
+/* Contenedor del texto para alinear el badge */
+.logo-text-wrapper {
+    display: flex;
+    align-items: baseline;
+    position: relative;
+}
+
+/* Estilo de la tipografía */
+.logo-text-bold {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 800; /* Muy negrita */
+    color: #2d3436;   /* Gris muy oscuro, casi negro */
+    letter-spacing: -0.5px;
+}
+
+.logo-text-light {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 400; /* Delgada */
+    color: #f44336;   /* El mismo rojo de la manzana */
+    letter-spacing: -0.5px;
+}
+
+/* Ajuste del Badge Beta */
+.badge-beta {
+    background: #fdf2f2;
+    color: #f44336;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    margin-left: 5px;
+    border: 1px solid #ffcdd2;
+    vertical-align: middle;
+}
 /* --- AJUSTES RESPONSIVE (MÓVIL) --- */
 @media (max-width: 850px) {
     .dropdown {
